@@ -1,0 +1,10 @@
+var Sequelize = require('sequelize');
+var sequelize = require('../db/ice_orm.js');
+
+var course = sequelize.define('Courses', {
+
+
+
+
+
+});

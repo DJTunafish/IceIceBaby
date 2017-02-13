@@ -28,21 +28,15 @@ app.use(bodyParser.urlencoded({extended: false}));
 //ROUTING SETUP
 app.use('/courses', course);
 
-app.listen(3000, function() {
-    console.log("Listening at port 3000");
+app.listen(8080, function() {
+    console.log("Listening at port 8080");
 });
 
-app.all('/*', function(req, res, next) {
-    res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT");
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
-    next();
-});
 
 app.use(function(err, req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+   // var err = new Error('Not Found');
+   // err.status = 404;
+   // next(err);
 })
 
 // Exception handling

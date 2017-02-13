@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-    res.json('test', {text: 'DSsgsdgsdgd'});
+    res.render('index', {text: "ping"});
 });
 
 module.exports = router;
