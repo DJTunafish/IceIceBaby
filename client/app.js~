@@ -33,12 +33,6 @@ app.listen(8080, function() {
 });
 
 
-app.use(function(err, req, res, next) {
-   // var err = new Error('Not Found');
-   // err.status = 404;
-   // next(err);
-})
-
 // Exception handling
 if (app.get('env') === 'development') {
     console.log("In development mode");

@@ -1,4 +1,4 @@
 <html>
-{{ >partials/head }}
+{{ >partials/header }}
 
 </html>
