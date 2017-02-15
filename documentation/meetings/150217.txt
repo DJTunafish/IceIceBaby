@@ -1,0 +1,30 @@
+Mötesagenda:
+
+Robert fixar databasen idag, till stor del i alla fall. Skriver nog tester i Java. Gör lite issues på github.
+Erik fixar login & registrering. Även kanske lite sessionmanagement här.
+Aleksander & Adam kollar på github senare och väljer sysslor utefter issues.
+
+Resurser:
+- Courses
+  - gruppregistrering
+  - coursequiz
+  - gruppview
+- login
+- registrering
+  - hårdkoda in adminusers
+  - registrering enbart för vanliga users
+- adminview
+  - skapa kurs
+  - ta bort kurs
+  - gå in på kurs
+    - ändra beskrivning
+    - lägga till quiz
+    - se gruppkonstellationer
+- studentview
+  - ändra profil
+  - söka på kurs
+  - gå med i kurs
+  - gå in i grupp
+    - gå med i grupp
+    - gå ur grupp
+    - se andras profiler
