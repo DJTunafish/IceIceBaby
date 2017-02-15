@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS Groups (
   id SMALLINT,
   course VARCHAR(5) REFERENCES Course(gencode),
   student VARCHAR(20) REFERENCES Student(cid),
-  PRIMARY KEY (id, course)
+  PRIMARY KEY (id, course, student)
   );
   
 CREATE TABLE IF NOT EXISTS RegisteredAt (
