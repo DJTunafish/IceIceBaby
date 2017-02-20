@@ -24,6 +24,9 @@ var User = sequelize.define('User', {
   password: {
     type: Sequelize.STRING
   }
+},
+{
+  timestamps: false
 });
 
 module.exports = User;

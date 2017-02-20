@@ -15,6 +15,9 @@ var Student = sequelize.define('Student', {
   profile: {
     type: Sequelize.STRING
   }
+},
+{
+  timestamps: false
 });
 
 module.exports = Student;

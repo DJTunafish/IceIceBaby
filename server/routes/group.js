@@ -9,13 +9,13 @@ router.get('/', function(req, res, next) {
 
 router.post('/join', function(req, res, next) {
   Group.build({
+    id: 1,
     student: req.body.cid,
-    course: req.body.gencode,
-    score: (req.body.score == "undefined" ? -1 : req.body.score)
+    course: req.body.gencode
   }).save().then(function() {
     res.status(201);
   }).catch(function(err) {
-    res.status(500).send("error joining group");
+    res.status(500).send(err);
   });
 });
 
