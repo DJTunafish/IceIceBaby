@@ -9,13 +9,13 @@ router.get('/', function(req, res, next) {
 
 router.post('/join', function(req, res, next) {
   Group.build({
-    id: 1,
-    student: req.body.cid,
-    course: req.body.gencode
+    id: parseInt(req.body.id),
+    student: req.body.student,
+    course: req.body.course
   }).save().then(function() {
-    res.status(201);
+    res.json('asdsdfdfgdfgs');//status(201);
   }).catch(function(err) {
-    res.status(500).send(err);
+    res.status(500).send((err + "\n"));
   });
 });
 
