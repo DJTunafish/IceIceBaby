@@ -20,3 +20,5 @@ var RegisteredAt = sequelize.define('RegisteredAt', {
   //Composite keys unsupported in sequelize
   //PRIMARY KEY (student, course)
 }
+
+module.exports = RegisteredAt;
