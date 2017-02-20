@@ -1,11 +1,13 @@
 var Sequelize = require('sequelize');
 var sequelize = require('../db/ice_orm.js');
 
+var Admin = require('./Admin.js');
+
 var Course = sequelize.define('Courses', {
 
   //code one regs with
   gencode: {
-    type: Sequelize.VARCHAR,
+    type: Sequelize.STRING,
     primaryKey: true,
     allowNull: false
   },
@@ -14,21 +16,19 @@ var Course = sequelize.define('Courses', {
     allowNull: false
   },
   name: {
-    type: Sequelize.VARCHAR,
+    type: Sequelize.STRING,
     allowNull: false
   },
   description: {
-    type: Sequelize.VARCHAR
+    type: Sequelize.STRING
   },
   admin: {
-    type: Sequelize.VARCHAR,
+    type: Sequelize.STRING,
     references: {
       model: Admin,
       key: 'cid'
     }
   }
-    admin VARCHAR(20) REFERENCES Admin(cid)
-
 });
 
 module.exports = Course;
