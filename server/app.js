@@ -7,6 +7,7 @@ var methodOverride = require('method-override')
 var mustacheExpress = require('mustache-express');
 
 var course = require('./routes/course');
+var group = require('./routes/group');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 //ROUTING SETUP
 app.use('/courses', course);
+app.use('/groups', group);
 
 app.listen(3000, function() {
     console.log("Listening at port 3000");
