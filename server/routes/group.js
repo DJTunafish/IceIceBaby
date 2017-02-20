@@ -13,9 +13,23 @@ router.post('/join', function(req, res, next) {
     student: req.body.student,
     course: req.body.course
   }).save().then(function() {
-    res.json('asdsdfdfgdfgs');//status(201);
+    res.status(201);
   }).catch(function(err) {
     res.status(500).send((err + "\n"));
+  });
+});
+
+router.post('/leave', function(req, res, next) {
+  Group.destroy({
+    where: {
+      id: parseInt(req.body.id),
+      student: req.body.student,
+      course: req.body.course
+    }
+  }).then(function() {
+    res.status(200).send("deleted properly");
+  }).catch(function(err) {
+    res.status(500).send("something went wrong while leaving the group");
   });
 });
 
