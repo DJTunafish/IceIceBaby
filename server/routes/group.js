@@ -7,6 +7,10 @@ router.get('/', function(req, res, next) {
   res.json({text: "hi"});
 });
 
+/*
+  Given a student (cid), course (gencode) and a group-id (id), enlists a student in a group.
+  Returns 200 if successful, else 500.
+*/
 router.post('/join', function(req, res, next) {
   Group.build({
     id: parseInt(req.body.id),
@@ -19,6 +23,10 @@ router.post('/join', function(req, res, next) {
   });
 });
 
+/*
+  Given a student (cid), course (gencode) and a group-id (id), de-lists a student from a group.
+  Returns 200 upon successful de-listment, otherwise 500.
+*/
 router.post('/leave', function(req, res, next) {
   Group.destroy({
     where: {
