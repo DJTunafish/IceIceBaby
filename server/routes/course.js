@@ -2,11 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 var Course = require('../models/Course.js');
+var Quiz = require('./quiz.js');
 
-/*router.get('/', function(req, res, next) {
-    res.json( {text: 'DSsgsdgsdgd'});
-});
-*/
+router.use('/quiz', Quiz);
+
 /*
   Given a course (gencode), return the course entry associated with it.
 */

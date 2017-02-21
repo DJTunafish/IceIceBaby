@@ -30,6 +30,10 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.post('/join/course', function(req, res, next) {
+
+});
+
 
 
 
