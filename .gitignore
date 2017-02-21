@@ -38,6 +38,9 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Database info
+db/
+
 # Typescript v1 declaration files
 typings/
 
@@ -167,5 +170,3 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-
-

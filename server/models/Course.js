@@ -3,7 +3,7 @@ var sequelize = require('../db/ice_orm.js');
 
 var Admin = require('./Admin.js');
 
-var Course = sequelize.define('Courses', {
+var Course = sequelize.define('Course', {
 
   //code one regs with
   gencode: {
@@ -31,7 +31,8 @@ var Course = sequelize.define('Courses', {
   }
 },
 {
-  timestamps: false
+  timestamps: false,
+  freezeTableName: true
 });
 
 module.exports = Course;
