@@ -22,7 +22,7 @@ router.post('/score', function(req, res, next) {
     old.update({
       score: parseInt(req.body.score)
     }).then(function() {
-      res.status(200);
+      res.sendStatus(200);
     });
   });
 });

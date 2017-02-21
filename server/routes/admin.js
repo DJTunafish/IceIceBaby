@@ -30,7 +30,7 @@ router.post('/createcourse', function(req, res, next){
     description: req.body.description,
     admin: req.body.admin
   }).save().then(function() {
-    res.status(201);
+    res.sendStatus(200);
   }).catch(function(err) {
     res.status(500).send((err + "\n"));
   });

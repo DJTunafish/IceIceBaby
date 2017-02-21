@@ -61,7 +61,7 @@ app.use(function(err, req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
-})
+});
 
 // Exception handling
 if (app.get('env') === 'development') {
