@@ -5,7 +5,8 @@ var Course = require('./Course.js');
 
 var Question = sequelize.define('Question', {
   question: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    primaryKey: true
   },
   weight: {
     type: Sequelize.FLOAT
@@ -19,7 +20,8 @@ var Question = sequelize.define('Question', {
   }
 },
 {
-  timestamps: false
+  timestamps: false,
+  freezeTableName: true
 });
 
 module.exports = Question;

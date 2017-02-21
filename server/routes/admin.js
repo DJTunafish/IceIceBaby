@@ -28,7 +28,7 @@ router.post('/createcourse', function(req, res, next){
     coursecode: req.body.coursecode,
     name: req.body.name,
     description: req.body.description,
-    admin: req.session.currentUser
+    admin: req.body.admin//req.session.currentUser
   }).save().then(function() {
     res.status(201);
   }).catch(function(err) {
