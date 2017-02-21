@@ -4,7 +4,7 @@ var router = express.Router();
 var Admin = require('../models/Admin.js');
 var Student = require('../models/Student.js');
 var Course = require('../models/Course.js');
-var Question = require('../models/Question.js');
+var Quiz = require('../models/Quiz.js');
 var RegisteredAt = require('../models/RegisteredAt.js');
 
 /*
@@ -28,7 +28,7 @@ router.post('/score', function(req, res, next) {
 });
 
 router.get('/questions', function(req, res, next) {
-  Question.findAll({
+  Quiz.findAll({
     where: {
       course: req.query.gencode
     }
