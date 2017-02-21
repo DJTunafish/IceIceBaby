@@ -17,7 +17,7 @@ router.post('/join', function(req, res, next) {
     student: req.body.student,
     course: req.body.course
   }).save().then(function() {
-    res.status(201);
+    res.sendStatus(200);
   }).catch(function(err) {
     res.status(500).send((err + "\n"));
   });

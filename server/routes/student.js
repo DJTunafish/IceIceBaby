@@ -7,10 +7,10 @@ var Student = require('../models/Student.js');
 /*
   Given a student (cid), returns all the groups this student is a member of.
 */
-router.get('/groups/:cid', function(req, res, next) {
+router.get('/groups', function(req, res, next) {
   Group.findAll({
     where: {
-      student: req.params.cid
+      student: req.query.cid
     }
   }).then(function(groups) {
     res.json(groups);
@@ -20,14 +20,18 @@ router.get('/groups/:cid', function(req, res, next) {
 /*
   Given a student (cid), return the profile of the user.
 */
-router.get('/:cid', function(req, res, next) {
-  Student.findAll({
+router.get('/', function(req, res, next) {
+  Student.findOne({
     where: {
-      cid: req.params.cid
+      cid: req.query.cid
     }
   }).then(function(student) {
     res.json(student);
   });
+});
+
+router.post('/join/course', function(req, res, next) {
+
 });
 
 

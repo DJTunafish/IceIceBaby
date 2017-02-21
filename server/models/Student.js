@@ -17,7 +17,8 @@ var Student = sequelize.define('Student', {
   }
 },
 {
-  timestamps: false
+  timestamps: false,
+  freezeTableName: true
 });
 
 module.exports = Student;
