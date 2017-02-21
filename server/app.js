@@ -41,7 +41,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 
 //ROUTING SETUP
-app.use('/courses', course);
+app.use('/course', course);
 app.use('/groups', group);
 app.use('/student', student);
 app.use('/admin', admin);

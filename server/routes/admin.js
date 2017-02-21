@@ -6,12 +6,12 @@ var Student = require('../models/Student.js');
 var Course = require('../models/Course.js');
 
 
-//show admin page
-
+//test
 router.get('/test', function(req, res, next){
   res.json({text: "lollolollolol"});
 });
 
+//show admin page
 router.get('/', function(req, res, next) {
   Admin.findOne({
     where: {
@@ -19,6 +19,20 @@ router.get('/', function(req, res, next) {
     }
   }).then(function(admin) {
     res.json(admin);
+  });
+});
+
+router.post('/createcourse', function(req, res, next){
+  Course.build({
+    gencode: req.body.gencode,
+    coursecode: req.body.coursecode,
+    name: req.body.name,
+    description: req.body.description,
+    admin: req.session.currentUser
+  }).save().then(function() {
+    res.status(201);
+  }).catch(function(err) {
+    res.status(500).send((err + "\n"));
   });
 });
 
