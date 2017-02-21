@@ -29,6 +29,9 @@ var Course = sequelize.define('Courses', {
       key: 'cid'
     }
   }
+},
+{
+  timestamps: false
 });
 
 module.exports = Course;

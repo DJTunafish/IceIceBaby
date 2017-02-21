@@ -12,6 +12,9 @@ var Admin = sequelize.define('Admin', {
       key: 'cid'
     }
   }
+},
+{
+  timestamps: false
 });
 
 module.exports = Admin;

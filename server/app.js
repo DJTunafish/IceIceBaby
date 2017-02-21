@@ -1,4 +1,8 @@
 var express = require('express');
+
+//use express session?
+var session = require('express-session');
+
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -8,12 +12,21 @@ var mustacheExpress = require('mustache-express');
 
 var course = require('./routes/course');
 var group = require('./routes/group');
+var student = require('./routes/student');
 
 var app = express();
 
 //VARIABLES FOR ROUTING FILES GO HERE
 
 app.use(cookieParser());
+
+//testing sessions
+app.use(session({
+  secret: "yolo",
+  resave: true,
+  saveUnitialized: true,
+  currentUser: ""
+}));
 
 app.use('/public', express.static(path.join(__dirname, '/public')));
 
@@ -29,6 +42,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 //ROUTING SETUP
 app.use('/courses', course);
 app.use('/groups', group);
+app.use('/student', student);
 
 app.listen(3000, function() {
     console.log("Listening at port 3000");

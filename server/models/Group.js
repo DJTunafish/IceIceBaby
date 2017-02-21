@@ -5,6 +5,10 @@ var Student = require('./Student.js');
 var Course = require('./Course.js');
 
 var Group = sequelize.define('Group', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true
+  },
   student: {
     type: Sequelize.STRING,
     references: {
@@ -18,10 +22,10 @@ var Group = sequelize.define('Group', {
       model: Course,
       key  : 'gencode'
     }
-  },
-  score: {
-    type: Sequelize.INTEGER
   }
+},
+{
+  timestamps: false
 });
 
 module.exports = Group;

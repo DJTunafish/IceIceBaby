@@ -17,7 +17,9 @@ var Question = sequelize.define('Question', {
       key: 'gencode'
     }
   }
-
+},
+{
+  timestamps: false
 });
 
 module.exports = Question;
