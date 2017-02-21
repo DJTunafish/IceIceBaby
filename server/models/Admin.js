@@ -14,7 +14,8 @@ var Admin = sequelize.define('Admin', {
   }
 },
 {
-  timestamps: false
+  timestamps: false,
+  freezeTableName: true
 });
 
 module.exports = Admin;

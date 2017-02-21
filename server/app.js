@@ -13,6 +13,7 @@ var mustacheExpress = require('mustache-express');
 var course = require('./routes/course');
 var group = require('./routes/group');
 var student = require('./routes/student');
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/courses', course);
 app.use('/groups', group);
 app.use('/student', student);
+app.use('/admin', admin);
 
 app.listen(3000, function() {
     console.log("Listening at port 3000");
