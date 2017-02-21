@@ -1,6 +1,7 @@
 var Sequelize = require('sequelize');
 var sequelize = require('../db/ice_orm.js');
-
+var Student = require('./Student.js');
+var Course = require('./Course.js');
 var RegisteredAt = sequelize.define('RegisteredAt', {
   student: {
     references: {
@@ -20,3 +21,5 @@ var RegisteredAt = sequelize.define('RegisteredAt', {
   //Composite keys unsupported in sequelize
   //PRIMARY KEY (student, course)
 }
+
+module.exports = RegisteredAt;
