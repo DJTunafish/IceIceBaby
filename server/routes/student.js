@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var Group = require('../models/Group.js');
-var Student = require('../models/Student.js'):
+var Student = require('../models/Student.js');
 
 /*
   Given a student (cid), returns all the groups this student is a member of.
