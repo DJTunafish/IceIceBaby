@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="/scripts/index.js"></script>
+<link rel="stylesheet" href="css/w3.css">
+
+<body ng-app="myApp" ng-controller="myCtrl">
+
+  <nav class="w3-sidenav w3-white w3-card-2" style="width:25%">
+  <br>
+  <a href="#" ng-click="loadLogin()" ng-show="!loggedIn">Login</a>
+  <a href="#" ng-click="loadRegister()" ng-show="!loggedIn">Register</a>
+  <a href="#" ngclick="loadProfile()" ng-show="loggedIn">Profile</a> 
+  <a href="#" ngclick="loadStudentCourseView()" ng-show="loggedIn && !isAdmin"></a>
+  <a href="#" ngclick="loadAdmin()" ng-show="loggedIn && isAdmin">Course admin</a>
+  </nav>
+
+ <div ng-switch="displayPartial" style="margin-left:27%">
+  <div ng-switch-when="login">
+    <div ng-include="'partials/login.html'"></div>
+  </div>
+  <div ng-switch-when="register">
+    <div ng-include="'partials/register.html'"></div>
+  </div>
+  <div ng-switch-default>
+     <h1>Welcome to Ice!</h1>
+  </div>
+ </div>
+
+</body>
+</html>
+
