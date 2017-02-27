@@ -3,7 +3,7 @@ var router = express.Router();
 
 var Course = require('../models/Course.js');
 var Quiz = require('./quiz.js');
-
+var Group = require('../models/Group.js');
 router.use('/quiz', Quiz);
 
 /*
@@ -18,5 +18,18 @@ router.get('/', function(req, res, next) {
     res.json(course);
   });
 });
+
+router.get('/coursegroups', function(req, res, next) {
+  Group.findAll({
+    where: {
+      course: req.query.gencode
+    }
+  }).then(function(course) {
+    res.json(course);
+  });
+});
+
+
+
 
 module.exports = router;
