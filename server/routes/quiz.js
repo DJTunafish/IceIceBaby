@@ -13,10 +13,10 @@ var RegisteredAt = require('../models/RegisteredAt.js');
 
 router.post('/score', function(req, res, next) {
   RegisteredAt.findOne({
-    where: {
-      student: req.body.cid,
+    { where: {
+      student: req.body.cid, /* This is still fucked, it only matches on the cid. TRY THIS IN SCHOOL TOMORROW */
       course: req.body.gencode
-    }
+    } }
   }).then(function(old) {
     res.json(old);
     old.update({
@@ -27,6 +27,10 @@ router.post('/score', function(req, res, next) {
   });
 });
 
+/*
+  Given a course (gencode), returns all the questions associated with this course, aswell as the weights and stuff.
+  The idea is that the client will handle asking the questions and calculating the score, and then simply posting the result to the server.
+*/
 router.get('/questions', function(req, res, next) {
   Question.findAll({
     where: {

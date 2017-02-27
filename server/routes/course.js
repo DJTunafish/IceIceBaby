@@ -19,6 +19,9 @@ router.get('/', function(req, res, next) {
   });
 });
 
+/*
+  Given a course (gencode), returns the groupconstellations in that course. Must be admin to be able to see this.
+*/
 router.get('/coursegroups', function(req, res, next) {
   Group.findAll({
     where: {

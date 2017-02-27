@@ -24,6 +24,13 @@ router.post('/join', function(req, res, next) {
 });
 
 /*
+  Should this be here? I think it should be somewhere in /course/group/members or possible /student/course/group/members
+*/
+router.get('/members', function(req, res, next) {
+  // have to look into how to make join querys. Worst case scenario we just write it out.
+});
+
+/*
   Given a student (cid), course (gencode) and a group-id (id), de-lists a student from a group.
   Returns 200 upon successful de-listment, otherwise 500.
 */

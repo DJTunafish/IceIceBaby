@@ -22,6 +22,10 @@ router.get('/', function(req, res, next) {
   });
 });
 
+/*
+  Given a course, coursecode, coursename, coursedescription and the cid of an admin, creates a course and
+  associates that admin with the course.
+*/
 router.post('/createcourse', function(req, res, next){
   Course.build({
     gencode: req.body.gencode,
@@ -37,12 +41,11 @@ router.post('/createcourse', function(req, res, next){
 });
 
 
-//removes a course with the given coursecode or gencode?
+//removes a course with the given gencode
 router.post('/removecourse', function(req, res, next) {
   Course.destroy({
     where: {
-      coursecode: req.body.coursecode
-      //gencode: req.body.gencode
+      gencode: req.body.gencode
     }
   }).then(function() {
     res.status(200).send("removed properly");

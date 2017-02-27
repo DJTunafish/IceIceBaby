@@ -3,6 +3,7 @@ var router = express.Router();
 
 var Group = require('../models/Group.js');
 var Student = require('../models/Student.js');
+var RegisteredAt = require('../models/RegisteredAt.js');
 
 /*
   Given a student (cid), returns all the groups this student is a member of.
@@ -30,8 +31,19 @@ router.get('/', function(req, res, next) {
   });
 });
 
+/*
+  Given a student (cid) and a course (gencode), registers the student at the course.
+*/
+// NOT TESTED, TEST TOMORROW
 router.post('/join/course', function(req, res, next) {
-
+  RegisteredAt.build({
+    student: req.body.cid,
+    course: req.body.gencode
+  }).save().then(function() {
+    res.sendStatus(200);
+  }).catch(function(err) {
+    res.sendStatus(500);
+  });
 });
 
 
