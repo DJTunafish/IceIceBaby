@@ -41,7 +41,7 @@ router.post('/createcourse', function(req, res, next){
 router.post('/removecourse', function(req, res, next) {
   Course.destroy({
     where: {
-      coursecode: req.query.coursecode
+      coursecode: req.body.coursecode
       //gencode: req.body.gencode
     }
   }).then(function() {
