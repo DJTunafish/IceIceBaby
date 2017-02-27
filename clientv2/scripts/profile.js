@@ -1,0 +1,5 @@
+
+
+function loadProfPage($scope, $http){
+  
+}

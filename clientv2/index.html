@@ -11,9 +11,15 @@
   <br>
   <a href="#" ng-click="loadLogin()" ng-show="!loggedIn">Login</a>
   <a href="#" ng-click="loadRegister()" ng-show="!loggedIn">Register</a>
+<<<<<<< HEAD
+  <a href="#" ng-click="loadProfile()" ng-show="loggedIn">Profile</a>
+  <a href="#" ng-click="loadStudentCourseView()" ng-show="loggedIn && !isAdmin">Courses</a>
+  <a href="#" ng-click="loadAdmin()" ng-show="loggedIn && isAdmin">Course admin</a>
+=======
   <a href="#" ngclick="loadProfile()" ng-show="loggedIn">Profile</a> 
   <a href="#" ngclick="loadStudentCourseView()" ng-show="loggedIn && !isAdmin"></a>
   <a href="#" ngclick="loadAdmin()" ng-show="loggedIn && isAdmin">Course admin</a>
+>>>>>>> fca3fbf498d386c69500c0b06aabbf96ece04494
   </nav>
 
  <div ng-switch="displayPartial" style="margin-left:27%">
@@ -23,11 +29,22 @@
   <div ng-switch-when="register">
     <div ng-include="'partials/register.html'"></div>
   </div>
+<<<<<<< HEAD
+  <div ng-switch-when="profile">
+    <div ng-include="'partials/profile.html'"></div>
+  </div>
+  <div ng-switch-default ng-controller="defCtrl">
+     <div ng-include = "'partials/default.html'"></div>
+=======
   <div ng-switch-default>
      <h1>Welcome to Ice!</h1>
+>>>>>>> fca3fbf498d386c69500c0b06aabbf96ece04494
   </div>
  </div>
 
 </body>
 </html>
+<<<<<<< HEAD
+=======
 
+>>>>>>> fca3fbf498d386c69500c0b06aabbf96ece04494
