@@ -16,6 +16,7 @@ var student = require('./routes/student');
 var admin = require('./routes/admin');
 var login = require('./routes/login');
 var register = require('./routes/register');
+var user = require('./routes/user');
 
 var app = express();
 
@@ -49,6 +50,7 @@ app.use('/student', student);
 app.use('/admin', admin);
 app.use('/login', login);
 app.use('/register', register);
+app.use('/user', user);
 
 app.listen(3000, function() {
     console.log("Listening at port 3000");
