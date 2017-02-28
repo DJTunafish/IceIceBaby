@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function logIn($http, $scope){
   console.log("Sending login request");
   $.getScript('scripts/constants.js', function() {
@@ -33,11 +32,5 @@ function logIn($http, $scope){
 
 function loadLogPage($scope){
 
-=======
-
-
-function loadLogPage($scope, $http){
-  console.log("login loadPage");
->>>>>>> fca3fbf498d386c69500c0b06aabbf96ece04494
   $scope.displayPartial = "login";
 }

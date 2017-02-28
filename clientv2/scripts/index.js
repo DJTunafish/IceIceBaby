@@ -1,25 +1,4 @@
 
-<<<<<<< HEAD
-=======
-  console.log("load script");
-
-  console.log("run function");
->>>>>>> fca3fbf498d386c69500c0b06aabbf96ece04494
-/*  var app = angular.module("myApp", ["ngRoute"]);
-  app.config(function($routeProvider) {
-      $routeProvider
-      .when("/", {
-          templateUrl : "main.htm"
-      })
-      .when("/login", {
-          templateUrl : "'login.html'"
-      })
-      .when("/register", {
-          templateUrl : "'partials/register.htm'"
-      })
-  });*/
-
-<<<<<<< HEAD
   var setDisplayPartial;
   var setDefaultMessage;
   var setLoggedIn;
@@ -75,16 +54,6 @@
     //The .js file for every view should have a loadPage($scope) function,
     //which is used in the sidenav to load the partial.
 
-=======
-  var mainApp = angular.module('myApp', []);
-  //TODO: Default values for isAdmin & shite
-  mainApp.controller('myCtrl', function($scope, $http) { 
-    console.log("myCtrl");
-    //Set functions for loading each page
-    //The .js file for every view should have a loadPage($scope) function,
-    //which is used in the sidenav to load the partial.
-    
->>>>>>> fca3fbf498d386c69500c0b06aabbf96ece04494
     $.getScript('scripts/login.js', function() {
       $scope.loadLogin = function(){
         loadLogPage($scope);
@@ -95,7 +64,6 @@
         loadRegPage($scope);
       }
     });
-<<<<<<< HEAD
     /*$.getScript('scripts/profile.js', function() {*/
         console.log("loadProfile: " + $scope.loadProfile);
         $scope.loadProfile = function(){
@@ -165,22 +133,3 @@
     }
     console.log(getGScope().loadProfile);*/
   });
-=======
-
-  });
-  
-/*  mainApp.controller('loginCtrl', function($scope, $http) {
-      console.log("loginCtrl");
-  });
-*/
-  mainApp.controller('regCtrl', function($scope, $http) {
-    $scope.registerUser = function() {
-        regUser($http);
-    };
-
-    console.log("HI HO");
-  });   
-
-
-
->>>>>>> fca3fbf498d386c69500c0b06aabbf96ece04494
