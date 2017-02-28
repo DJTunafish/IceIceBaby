@@ -13,10 +13,10 @@ var RegisteredAt = require('../models/RegisteredAt.js');
 
 router.post('/score', function(req, res, next) {
   RegisteredAt.findOne({
-    { where: {
+     where: {
       student: req.body.cid, /* This is still fucked, it only matches on the cid. TRY THIS IN SCHOOL TOMORROW */
       course: req.body.gencode
-    } }
+    }
   }).then(function(old) {
     res.json(old);
     old.update({

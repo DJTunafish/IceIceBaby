@@ -36,8 +36,6 @@ router.get('/', function(req, res) {
   //});
 });
 
-router.post('/join/course', function(req, res, next) {
-
 /*
   Given a student (cid) and a course (gencode), registers the student at the course.
 */
@@ -52,10 +50,6 @@ router.post('/join/course', function(req, res, next) {
     res.sendStatus(500);
   });
 });
-
-
-
-
 
 
 module.exports = router;
