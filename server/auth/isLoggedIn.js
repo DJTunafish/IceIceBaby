@@ -10,17 +10,14 @@ var exp =
       //TODO: Crash when faulty token given. Does this need to be fixed?
     //  console.log("Decoded: " + jwt.decode("afljflsdlfsdlfdsl", constants.secret));
       token = jwt.decode(token, constants.secret);
-      console.log("Token.expires: " + token.expires);
-      //console.log("Token getTime: " + token.expires.getTime());
       if(token.expires > new Date().getTime()){
-        console.log("IN DA BIG IF");
-        token.expires = new Date();
-        console.log("WHAFA");
-        token.expires = new Date(token.expires + 15*60000);
-        console.log("HEYYHEYY");
+        console.log("Valid token");
+        console.log("Original expires: " + token.expires);
+        token.expires = new Date(new Date().getTime() + 15*60000).getTime();
+        console.log("New expires: " + token.expires);
         return {token: jwt.encode(token, constants.secret)};
       }else{
-        console.log("SHOULDN'T BE here");
+        console.log("Expired token");
         res.json({result: "failure", message: "Session expired"});
         return false;
       }

@@ -29,7 +29,7 @@ router.get("/", function(req, res, next){
 });
 
 router.get("/courses", function(req, res, next){
-  var loggedIn = isLogedIn(req, res);
+  var loggedIn = isLoggedIn(req, res);
   if(loggedIn){
     RegisteredAt.findAll({
       where: {
@@ -46,7 +46,7 @@ router.get("/courses", function(req, res, next){
           $or: courses
         }
       }).then(function(coursesResponse){
-        res.json({result: "success", courses: coursesResponse});
+        res.json({result: "success", courses: coursesResponse, token: loggedIn.token});
       });
     });
   }
