@@ -3,17 +3,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="/scripts/index.js"></script>
-<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="css/style.css">
 
 <body ng-app="myApp" ng-controller="myCtrl">
 
   <nav class="w3-sidenav w3-white w3-card-2" style="width:25%">
   <br>
-  <a href="#" ng-click="loadLogin()" ng-show="!loggedIn">Login</a>
-  <a href="#" ng-click="loadRegister()" ng-show="!loggedIn">Register</a>
-  <a href="#" ng-click="loadProfile()" ng-show="loggedIn">Profile</a>
-  <a href="#" ng-click="loadStudentCourseView()" ng-show="loggedIn && !isAdmin">Courses</a>
-  <a href="#" ng-click="loadAdmin()" ng-show="loggedIn && isAdmin">Course admin</a>
+  <img id="logo" src="img/Ice-PNG-Image.png">
+  <a href="#" class="sideLink" ng-click="loadLogin()" ng-show="!loggedIn">Login</a>
+  <a href="#" class = "sideLink" ng-click="loadRegister()" ng-show="!loggedIn">Register</a>
+  <a href="#" class = "sideLink" ng-click="loadProfile()" ng-show="loggedIn">Profile</a>
+  <a href="#" class = "sideLink" ng-click="loadStudentCourseView()" ng-show="loggedIn && !isAdmin">Courses</a>
+  <a href="#" class = "sideLink" ng-click="loadAdmin()" ng-show="loggedIn && isAdmin">Course admin</a>
   </nav>
 
  <div ng-switch="displayPartial" style="margin-left:27%">

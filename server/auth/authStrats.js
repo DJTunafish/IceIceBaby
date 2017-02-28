@@ -3,7 +3,6 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt   = require('bcrypt-nodejs');
 var randtoken = require('rand-token');
-var AuthToken = require('../models/AuthToken');
 
 
 passport.serializeUser(function(user, done) { //TODO
@@ -60,7 +59,7 @@ passport.use('login', new LocalStrategy({
         console.log("PASSWORD INCORRECT");
       } else {
         console.log("EVERYTHING FINE");
-        done(null, cid); 
+        done(null, cid);
       }
     }).error(function(err){
       done(err);

@@ -64,13 +64,13 @@
         loadRegPage($scope);
       }
     });
+
     /*$.getScript('scripts/profile.js', function() {*/
-        console.log("loadProfile: " + $scope.loadProfile);
-        $scope.loadProfile = function(){
-          console.log("Run loadProfile");
-          $scope.displayPartial = "profile";
-        }
-        console.log("loadProfile: " + $scope.loadProfile);
+    $scope.loadProfile = function(){
+      console.log("Run loadProfile");
+      sessionStorage.setItem("desiredProfile", sessionStorege.getItem("cid")); //TODO: Hella ad-hoc solution, will do for now
+      $scope.displayPartial = "profile";
+    }
   /*  });*/
 
   });
@@ -102,25 +102,11 @@
 
   mainApp.controller('profileCtrl', function($scope, $http){
     console.log("Run profileCtrl");
-    //TODO: Set token in header, write function for authenticating
-    $.getScript('scripts/constants.js', function() {
-      $http({
-        method: 'GET',
-        url: serverURL + "/student",
-        params: {cid: sessionStorage.getItem("cid")},
-        headers: {'Authorization': sessionStorage.getItem("token")}
-        }).then(function(response){
-          if(response.data.result == "success"){
-            console.log("success");
-            sessionStorage.setItem("token", response.data.token);
-            $scope.profile = response.data.student.profile;
-          }else{
-            console.log("failure");
-            console.log(sessionStorage.getItem("cid"));
-            authenticationFailure(response.data);
-          }
-        });
-    });
+    $.getScript('scripts/profile.js', function() {
+      $scope.loadLogin = function(){
+        loadProfPage($scope, $http, sessionStorage.getItem("desiredProfile"));
+      };
+    }); //TODO: Set stuff here once profile.html is a bit more developed
   });
 
   mainApp.controller('defCtrl', function($scope, $http){

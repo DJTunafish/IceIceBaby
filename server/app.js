@@ -14,6 +14,8 @@ var course = require('./routes/course');
 var group = require('./routes/group');
 var student = require('./routes/student');
 var admin = require('./routes/admin');
+var login = require('./routes/login');
+var register = require('./routes/register');
 
 var app = express();
 
@@ -45,6 +47,8 @@ app.use('/course', course);
 app.use('/groups', group);
 app.use('/student', student);
 app.use('/admin', admin);
+app.use('/login', login);
+app.use('/register', register);
 
 app.listen(3000, function() {
     console.log("Listening at port 3000");
@@ -53,7 +57,7 @@ app.listen(3000, function() {
 app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT");
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization");
     next();
 });
 
