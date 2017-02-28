@@ -5,11 +5,11 @@
 <script src="/scripts/index.js"></script>
 <link rel="stylesheet" href="css/style.css">
 
-<body ng-app="myApp" ng-controller="myCtrl">
+<body id="body" ng-app="myApp" ng-controller="myCtrl">
 
-  <nav class="w3-sidenav w3-white w3-card-2" style="width:25%">
+  <nav id="sideNav" style="width:15%">
   <br>
-  <img id="logo" src="img/Ice-PNG-Image.png">
+  <img id="logo" src="img/Ice-logo.png">
   <a href="#" class="sideLink" ng-click="loadLogin()" ng-show="!loggedIn">Login</a>
   <a href="#" class = "sideLink" ng-click="loadRegister()" ng-show="!loggedIn">Register</a>
   <a href="#" class = "sideLink" ng-click="loadProfile()" ng-show="loggedIn">Profile</a>
@@ -17,7 +17,7 @@
   <a href="#" class = "sideLink" ng-click="loadAdmin()" ng-show="loggedIn && isAdmin">Course admin</a>
   </nav>
 
- <div ng-switch="displayPartial" style="margin-left:27%">
+ <div ng-switch="displayPartial" style="margin-left:17%">
   <div ng-switch-when="login">
     <div ng-include="'partials/login.html'"></div>
   </div>
