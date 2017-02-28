@@ -1,5 +1,17 @@
 <div ng-controller="profileCtrl">
-  <span ng-bind="name">
-  <span ng-bind="cid">  
-  <span ng-bind="profile">
+  <div ng-show="!updateProfile">
+    <h3>Personal info</h3>
+    <b>Name:</b><span ng-bind="name"> </span><br>
+    <b>cid:</b><span ng-bind="user"> </span><br>
+    <b>Email:</b><span ng-bind="email"> </span><br>
+    <h3>Registered courses</h3><br>
+     <span ng-repeat="course in reggedCourses">{{course.coursecode}},{{course.name}}</span>
+    <h3>Profile</h3><br>
+    <span ng-bind="profile" style="left-margin:5%"></span><br>
+    <button ng-show="ownProfile" ng-click="updateProfileView()">Update profile/password</button>
+  </div>
+
+  <div ng-show="updateProfile">
+
+  </div>
 </div>
