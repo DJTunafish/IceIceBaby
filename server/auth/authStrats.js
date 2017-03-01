@@ -28,7 +28,7 @@ passport.use('signup', new LocalStrategy({
   function(req, cid, password, done) {
     User.find({ where: { cid: cid }}).success(function(user) {
       if (!user) {
-         var passHash = bcrypt.hashSync(cid + password, bcrypt.genSaltSync(8), null);
+         var passHash = (cid + password);//bcrypt.hashSync(cid + password, bcrypt.genSaltSync(8), null);
          var newUser = User.create({cid: cid, personnumber: req.body.personnumber,
                                     email: req.body.email, firstname: req.body.firstname,
                                     lastname: req.body.lastname, password: passHash});
@@ -50,13 +50,15 @@ passport.use('login', new LocalStrategy({
     },
   function(req, cid, password, done) {
     console.log("Login auth strategy");
-    User.findOne({ where: { cid : cid }}).then(function(user) {
+    User.findOne({
+      where: { cid : cid }
+    }).then(function(user) {
       if (!user) {
         done(null, false, { message: 'Unknown user' });
         console.log("USER DOES NOT EXIST");
-      } else if (!(bcrypt.compareSync(cid + password, user.password))) {
+      } else if (/*!(bcrypt.compareSync(cid + password, user.password))*/(user.cid + user.password) == (cid + password)) {
         done(null, false, { message: 'Invalid password'});
-        console.log("PASSWORD INCORRECT");
+        console.log("PASSWORD INCORRECT: " + user.password + " given was: " + password);
       } else {
         console.log("EVERYTHING FINE");
         done(null, cid);
