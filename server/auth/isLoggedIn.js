@@ -5,7 +5,7 @@ var constants = require("../resources/constants.js");
 var exp =
   function isLoggedIn(req, res){
       console.log("isLoggedIn");
-      var token = req.get("Authorization")
+      var token = req.get("Authorization");
       console.log("Coded: " + token);
       //TODO: Crash when faulty token given. Does this need to be fixed?
     //  console.log("Decoded: " + jwt.decode("afljflsdlfsdlfdsl", constants.secret));
