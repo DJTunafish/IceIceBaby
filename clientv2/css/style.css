@@ -47,6 +47,11 @@
   font-weight: bold;
 }
 
+.largeText{
+  padding: 12px 20px;
+  margin: 8px 0;
+}
+
 button{
   border-radius: 20px;
   background-color: #228fe2;

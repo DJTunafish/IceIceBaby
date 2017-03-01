@@ -1,17 +1,18 @@
   <div ng-controller="regCtrl">
+   <span ng-bind="errorMsg"></span>
    <form novalidate>
       First Name:<br>
-    <input id="fName" type="text" ng-model="user.firstName"><br>
+    <input id="fName" type="text"><br>
       Last Name:<br>
-    <input id="lName" type="text" ng-model="user.lastName"><br>
+    <input id="lName" type="text"><br>
     Personnumber:<br>
-    <input id="personnumber" type="text" ng-model="user.personnumber"><br>
+    <input id="personnumber" type="text"><br>
     CID:<br>
-    <input id="cid" type="text" ng-model="user.cid"><br>
+    <input id="cid" type="text"><br>
     email:<br>
-    <input id="email" type="text" ng-model="user.email"><br>
+    <input id="email" type="text"><br>
     Password:<br>
-    <input id="email" type="password" ng-model="user.password"><br>
+    <input id="password" type="password"><br>
     <br><br>
     <button ng-click="registerUser()">Submit</button>
   </form>
