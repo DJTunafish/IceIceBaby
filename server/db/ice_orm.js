@@ -5,7 +5,7 @@ var Sequelize = require('sequelize');
 
 // Sequelize('astern', 'astern', 'srJiMob7', {
 //can only be accessed within chalmers network
-var sq = new Sequelize('ice', 'root', 'minare12', {
+var sq = new Sequelize('iceicebaby', 'test', 'test', {
     host: 'localhost',
     dialect: 'mysql', //|'sqlite'|'postgres'|'mssql',
     pool: {

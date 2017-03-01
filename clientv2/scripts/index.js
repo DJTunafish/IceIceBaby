@@ -68,7 +68,7 @@
     /*$.getScript('scripts/profile.js', function() {*/
     $scope.loadProfile = function(){
       console.log("Run loadProfile");
-      sessionStorage.setItem("desiredProfile", sessionStorege.getItem("cid")); //TODO: Hella ad-hoc solution, will do for now
+      sessionStorage.setItem("desiredProfile", sessionStorage.getItem("cid")); //TODO: Hella ad-hoc solution, will do for now
       $scope.displayPartial = "profile";
     }
   /*  });*/
@@ -103,10 +103,11 @@
   mainApp.controller('profileCtrl', function($scope, $http){
     console.log("Run profileCtrl");
     $.getScript('scripts/profile.js', function() {
-      $scope.loadLogin = function(){
-        loadProfPage($scope, $http, sessionStorage.getItem("desiredProfile"));
+      $scope.updateProfileView = function(){
+        updateProfile($scope, $http);
       };
-    }); //TODO: Set stuff here once profile.html is a bit more developed
+      loadProfPage($scope, $http, sessionStorage.getItem("desiredProfile"));
+    });
   });
 
   mainApp.controller('defCtrl', function($scope, $http){
