@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var sequelize = require('../db/ice_orm.js');
+var Sequelize = require('sequelize');
 
 var Course = require('../models/Course.js');
 var Quiz = require('./quiz.js');
@@ -27,7 +29,7 @@ router.get('/allgroups', function(req, res, next) {
   var students = [];
   Group.findAll({
     where: {
-      course: req.query.gencode
+      course: req.query.course
     }
   }).then(function(course) {
     res.json(course);
@@ -35,9 +37,23 @@ router.get('/allgroups', function(req, res, next) {
 });
 
 
-router.get('/group/members', function(req, res, next) {
+//If someone wants to make this to work, go ahead. Supposed to get profiles in a group.
+router.get('/group/meminfo', function (req, res, next) {
+  //console.log("bajs bajs" + req.query.id);
+  Sequelize.query("SELECT * FROM student WHERE cid IN (SELECT student FROM groups WHERE id = :id AND course = :course)",
+      {model: Student}, {replacements: {id: req.query.id, course: req.query.course}}).then(function (students) {
+        res.json(students);
+
+
+      }).catch(function (err) {
+        res.status(500).send("Y u no werk");
+
+  });
+});
+
+router.get('/group', function(req, res, next) {
   var students = [];
-  Group.findAll( {
+  Group.findOne( {
     where: {
       id: parseInt(req.query.id),
       course: req.query.course
