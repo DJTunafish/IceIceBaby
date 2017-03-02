@@ -17,20 +17,23 @@
   <a href="#" class = "sideLink" ng-click="loadAdmin()" ng-show="loggedIn && isAdmin">Course admin</a>
   </nav>
 
- <div ng-switch="displayPartial" style="margin-left:17%">
-  <div ng-switch-when="login">
-    <div ng-include="'partials/login.html'"></div>
-  </div>
-  <div ng-switch-when="register">
-    <div ng-include="'partials/register.html'"></div>
-  </div>
-  <div ng-switch-when="profile">
-    <div ng-include="'partials/profile.html'"></div>
-  </div>
-  <div ng-switch-default ng-controller="defCtrl">
-     <div ng-include = "'partials/default.html'"></div>
-  </div>
- </div>
+  <div ng-switch="displayPartial" style="margin-left:17%">
+      <div ng-switch-when="login">
+        <div ng-include="'partials/login.html'"></div>
+      </div>
+      <div ng-switch-when="register">
+        <div ng-include="'partials/register.html'"></div>
+      </div>
+      <div ng-switch-when="profile">
+        <div ng-include="'partials/profile.html'"></div>
+      </div>
+      <div ng-switch-when="courses">
+          <div ng-include="'partials/courses.html'"></div>
+      </div>
+      <div ng-switch-default ng-controller="defCtrl">
+         <div ng-include = "'partials/default.html'"></div>
+      </div>
+     </div>
 
 </body>
 </html>
