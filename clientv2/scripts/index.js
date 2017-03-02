@@ -66,13 +66,12 @@
     });
 
     //loads the view for a students courses
-    $.getScript('scripts/courses.js', function() {
-      console.log("in index.js/courseView");
-      $scope.loadStudentCourseView = function(){
-        loadStudCourses($scope, $http);
-        $scope.displayPartial = "courses"
-      }
-    });
+    //$.getScript('scripts/courses.js', function() {
+    //console.log("in index.js/courseView");
+    $scope.loadStudentCourseView = function(){
+      $scope.displayPartial = "courses"
+    }
+    //});
 
     /*$.getScript('scripts/profile.js', function() {*/
     $scope.loadProfile = function(){
@@ -113,7 +112,7 @@
   mainApp.controller('coursesCtrl', function ($scope, $http) {
     console.log("Try to get courses");
     $.getScript('scripts/courses.js', function () {
-      loadStudCourses($scope, $http, sessionStorage.getItem("desiredProfile"));
+      loadStudCourses($scope, $http);
     });
   });
 
