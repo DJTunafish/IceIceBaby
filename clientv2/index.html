@@ -35,6 +35,9 @@
       <div ng-switch-when="courseRegister">
           <div ng-include="'partials/courseRegister.html'"></div>
       </div>
+      <div ng-switch-when="groupJoin">
+          <div ng-include="'partials/groupJoin.html'"></div>
+      </div>
       <div ng-switch-default ng-controller="defCtrl">
          <div ng-include = "'partials/default.html'"></div>
       </div>

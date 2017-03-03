@@ -1,26 +1,79 @@
 var express = require('express');
 var router = express.Router();
 
+var isLoggedIn = require('../auth/isLoggedIn.js');
+var jwt = require('jwt-simple');
+var constants = require("../resources/constants.js");
+
 var Group = require('../models/Group.js');
+var RegisteredAt = require('../models/RegisteredAt.js');
 
 router.get('/', function(req, res, next) {
-  res.json({text: "hi"});
+  var loggedIn = isLoggedIn(req, res);
+  var decodedToken = jwt.decode(loggedIn.token, constants.secret);
+  if(loggedIn){
+    RegisteredAt.findOne(
+      {where: {student: decodedToken.user,
+               course: req.query.course}})
+    .then(function(registered){
+      if(registered){
+        Group.findAll(
+          {where: {course: req.query.course}})
+        .then(function(groups){
+          var returnGroups = new Array();
+          for(let i = 0; i < groups.length; i++){
+            if(returnGroups[groups[i].id]){
+              returnGroups[groups[i].id].members.push(groups[i].student);
+            }else{
+              returnGroups[groups[i].id] =
+                {number: groups[i].id, members: new Array(groups[i].student)};
+            }
+          }
+          res.json({result: "success", groups: returnGroups, token: loggedIn.token});
+        });
+      }else{
+        res.json({result: "success", message: "Not registered to course", token:loggedIn.token});
+      }
+    });
+  }
 });
 
 /*
   Given a student (cid), course (gencode) and a group-id (id), enlists a student in a group.
   Returns 200 if successful, else 500.
-*/
+*/ //TODO: Check that user isn't already member of group in given course
 router.post('/join', function(req, res, next) {
-  Group.build({
-    id: parseInt(req.body.id),
-    student: req.body.student,
-    course: req.body.course
-  }).save().then(function() {
-    res.sendStatus(200);
-  }).catch(function(err) {
-    res.status(500).send((err + "\n"));
-  });
+  var loggedIn = isLoggedIn(req, res);
+  if(loggedIn){
+    if(req.body.id){
+      console.log("Joining existing group");
+      Group.build({
+        id: parseInt(req.body.id),
+        student: req.body.student,
+        course: req.body.course
+      }).save().then(function() {
+        res.json({result: "success", token: loggedIn.token});
+      }).catch(function(err) {
+        res.status(500).send((err + "\n"));
+      });
+    }else{
+      console.log(req.body.course);
+      Group.max('id',
+        {where: {course: req.body.course}})
+      .then(function(maxId){
+        Group.build({
+          id: maxId + 1,
+          student: req.body.student,
+          course: req.body.course
+        }).save().then(function() {
+          res.json({result: "success", token: loggedIn.token});
+        }).catch(function(err) {
+          res.status(500).send((err + "\n"));
+        });
+      });
+    }
+
+  }
 });
 
 /*

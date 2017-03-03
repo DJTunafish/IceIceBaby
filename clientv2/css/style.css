@@ -39,6 +39,11 @@
   color:#000;
 }
 
+.clickable:hover{
+  text-decoration:underline;
+  background-color:#ccc;
+}
+
 .error{
   color:red;
 }

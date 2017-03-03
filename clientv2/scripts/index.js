@@ -187,3 +187,30 @@
       }
     });
   });
+
+  mainApp.controller('groupJoinCtrl', function($scope, $http){
+    $.getScript('scripts/groupJoin.js', function(){
+      if(inGroup($http, sessionStorage.getItem("currentCourse"), sessionStorage.getItem("cid"))){
+        setDefaultMessage("You already belong to a group in this course." +
+                          "Please leave your current group before joinin another.");
+        setDisplayPartial("default");
+      }else{
+        $scope.loadTinderSelect = function(){
+          loadTinderSelect($scope, $http, sessionStorage.getItem("currentCourse"));
+        };
+        $scope.loadGroupSelect = function(){
+          loadGroupSelect($scope, $http, sessionStorage.getItem("currentCourse"));
+        };
+        $scope.createGroup = function(){
+          createGroup($scope, $http, sessionStorage.getItem("currentCourse"));
+        };
+        $scope.showProfile = function(cid){
+          showProfile($scope, $http, sessionStorage.getItem("currentCourse"), cid);
+        };
+
+        $scope.joinGroup = function(groupNo){
+          joinGroup($scope, $http, sessionStorage.getItem("currentCourse"), groupNo);
+        };
+      }
+    });
+  });
