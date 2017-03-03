@@ -84,9 +84,10 @@
 
     /*$.getScript('scripts/profile.js', function() {*/
     $scope.loadProfile = function(){
-      console.log("Run loadProfile");
+      console.log("Run loadProfile " + sessionStorage.getItem("token"));
       sessionStorage.setItem("desiredProfile", sessionStorage.getItem("cid")); //TODO: Hella ad-hoc solution, will do for now
-      $scope.displayPartial = "profile";
+
+        $scope.displayPartial = "profile";
     }
   /*  });*/
 

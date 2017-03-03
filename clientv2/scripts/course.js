@@ -12,6 +12,8 @@ function loadCourseInfo($scope, $http, courseCode) {
             if(response.data.result == "success"){
                 sessionStorage.setItem("token", response.data.token);
                 $scope.courseInfo = response.data.courseResponse.description;
+               // $scope.displayPartial = "course";
+
             }
         })
     })

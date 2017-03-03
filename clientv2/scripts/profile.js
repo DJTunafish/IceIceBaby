@@ -23,6 +23,7 @@ function loadProfPage($scope, $http, cid){
   var userResponse = null;
   var coursesResponse = null;
   $.getScript('scripts/constants.js', function() {
+    console.log("getting student " + cid);
     $http({
       method: 'GET',
       url: serverURL + "/student",
