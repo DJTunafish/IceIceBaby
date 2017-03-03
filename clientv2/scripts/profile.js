@@ -3,7 +3,30 @@
 //      för att visa olika saker beroende på om man kollar på sin egen
 //      profil eller ej
 function updateProfile($scope, $http){
-  //TODO: What do when user wants to update profile
+  $scope.updateProfile = true;
+}
+
+function submitProfile($scope, $http){
+  if($("#nPassword").val() != "" && $("#nPassword").val() != $("#nPasswordConf").val()){
+    $scope.updateError = "Passwords do not match";
+  }else{
+    $http({
+      method: 'POST',
+      url: serverURL + "/user",
+      data: {profile : $("#profile").val(),
+             email : $("#email").val(),
+             password: $("#nPassword").val()},
+      headers: {'Authorization': sessionStorage.getItem("token")}
+    }).then(function(response){
+      if(response.data.result == "success"){
+        $scope.updateProfile = false;
+        setDefaultMessage("Profile updated!");
+        setDisplayPartial("default");
+      }else{
+        authenticationFailure(response.data);
+      }
+    });  }
+
 }
 
 function setInitialProfileValues($scope, studentResponse, userResponse, coursesResponse, cid){

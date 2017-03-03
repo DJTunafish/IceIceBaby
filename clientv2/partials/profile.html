@@ -12,12 +12,15 @@
   </div>
 
   <div ng-show="updateProfile">
-    <span class = "error" ng-bind="updateError"></span>
-    <span class = "label">Profile</span><br>
-    <input type="text" class="largeText"><br>
-    <span class = "label">New email</span><br>
-    <input id="email"type="text" class="largeText"><br>
-    <span class = "label">Current password</span><br>
-    <input id="cPassword" type="password">
+    <span class = "error" ng-bind="updateError"></span><br>
+    <span class = "label" >Profile</span><br>
+    <textarea id="profile" type="text" class="largeText" placeholder="{{profile}}"></textarea><br>
+    <span class = "label">Email</span><br>
+    <input id="email"type="text" placeholder="{{email}}"><br>
+    <span class = "label">New password(optional)</span><br>
+    <input id="nPassword" type="password"><br>
+    <span class = "label">Confirm new password(optional)</span><br>
+    <input id="nPasswordConf" type="password"><br>
+    <button ng-click="submitProfile()">Submit changes</button>
   </div>
 </div>

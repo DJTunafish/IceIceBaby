@@ -44,15 +44,19 @@
     }
 
     setLoggedOut = function() {
+      console.log("setLoggedOut");
       $scope.loggedIn = false;
       $scope.isAdmin = false;
+      sessionStorage.setItem("token", null);
+      sessionStorage.setItem("cid", null);
     }
-
-    $scope.defaultMsg = "Welcome to Ice!"
-
     //Set functions for loading each page
     //The .js file for every view should have a loadPage($scope) function,
     //which is used in the sidenav to load the partial.
+    $scope.setLoggedOut = function(){
+        setDefaultMessage("Logged out!");
+        setLoggedOut();
+    };
 
     $.getScript('scripts/login.js', function() {
       $scope.loadLogin = function(){
@@ -71,7 +75,37 @@
       sessionStorage.setItem("desiredProfile", sessionStorage.getItem("cid")); //TODO: Hella ad-hoc solution, will do for now
       $scope.displayPartial = "profile";
     }
-  /*  });*/
+
+    console.log("'Bout to do session check stuff'");
+    if(sessionStorage.getItem("cid")){
+      console.log("Session data found");
+      $.getScript('scripts/constants.js', function(){
+        $http({
+          method: 'GET',
+          url: serverURL + "/user",
+          params: {cid: sessionStorage.getItem("cid")},
+          headers: {'Authorization': sessionStorage.getItem("token")}
+        }).then(function(response){
+          if(response.data.result == "success"){
+            console.log("Verification successful");
+            sessionStorage.setItem("token", response.data.token);
+            $scope.loggedIn = true;
+            $scope.defaultMsg = "Welcome, " + sessionStorage.getItem("cid");
+            if(response.data.isAdmin){
+              $scope.isAdmin = true;
+            }
+          }else{
+            console.log("Verification failed");
+            sessionStorage.setItem("cid", null);
+            sessionStorage.setItem("token", null);
+            $scope.defaultMsg = "Welcome to Ice!"
+          }
+        });
+      });
+    }else{
+      console.log("No stored session data");
+      $scope.defaultMsg = "Welcome to Ice!"
+    }
 
   });
 
@@ -94,7 +128,6 @@
 
   mainApp.controller('loginCtrl', function($scope, $http) {
     console.log("Set submitLogin n shit");
-    $scope.errorMsg = "Proof this exists, set in logInCtrl";
     $scope.submitLogin = function() {
       logIn($http, $scope);
     };
@@ -105,6 +138,9 @@
     $.getScript('scripts/profile.js', function() {
       $scope.updateProfileView = function(){
         updateProfile($scope, $http);
+      };
+      $scope.submitProfile = function(){
+        submitProfile($scope, $http);
       };
       loadProfPage($scope, $http, sessionStorage.getItem("desiredProfile"));
     });

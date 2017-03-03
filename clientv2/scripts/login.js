@@ -17,7 +17,7 @@ function logIn($http, $scope){
                 setAdmin();
               }
               console.log("Sessionstorage: " + sessionStorage.getItem("token"));
-              setDefaultMessage("Logged in! Welcome!");
+              setDefaultMessage("Logged in! Welcome, " + sessionStorage.getItem("cid"));
               setDisplayPartial("default"); //TODO Change redirect here once profile view available
           }else{
             console.log("Set errorMsg");
