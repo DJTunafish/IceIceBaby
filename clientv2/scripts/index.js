@@ -74,7 +74,7 @@
     //console.log("in index.js/courseView");
     $scope.loadStudentCourseView = function(){
       $scope.displayPartial = "courses"
-    }
+    };
     //});
 
     /*$.getScript('scripts/profile.js', function() {*/
@@ -82,7 +82,12 @@
       console.log("Run loadProfile");
       sessionStorage.setItem("desiredProfile", sessionStorage.getItem("cid")); //TODO: Hella ad-hoc solution, will do for now
       $scope.displayPartial = "profile";
-    }
+    };
+
+    $scope.loadCourseReg = function(){
+      console.log("Run loadCourseReg");
+      $scope.displayPartial = "courseRegister"
+    };
 
     console.log("'Bout to do session check stuff'");
     if(sessionStorage.getItem("cid")){
@@ -171,4 +176,14 @@
       };
     }
     console.log(getGScope().loadProfile);*/
+  });
+
+  mainApp.controller('courseRegCtrl', function($scope, $http){
+    console.log("Controller for Course register view");
+    $.getScript('scripts/courseReg.js', function(){
+      $scope.registerCourse = function(){
+        console.log("Anonymous function for registerCourse");
+        registerCourse($scope, $http);
+      }
+    });
   });

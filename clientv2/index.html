@@ -16,6 +16,7 @@
   <a href="#" class = "sideLink" ng-click="loadProfile()" ng-show="loggedIn">Profile</a>
   <a href="#" class = "sideLink" ng-click="loadStudentCourseView()" ng-show="loggedIn && !isAdmin">Courses</a>
   <a href="#" class = "sideLink" ng-click="loadAdmin()" ng-show="loggedIn && isAdmin">Course admin</a>
+  <a href="#" class = "sideLink" ng-click="loadCourseReg()" ng-show="loggedIn && !isAdmin">Register course</a>
   </nav>
 
   <div ng-switch="displayPartial" style="margin-left:17%">
@@ -30,6 +31,9 @@
       </div>
       <div ng-switch-when="courses">
           <div ng-include="'partials/courses.html'"></div>
+      </div>
+      <div ng-switch-when="courseRegister">
+          <div ng-include="'partials/courseRegister.html'"></div>
       </div>
       <div ng-switch-default ng-controller="defCtrl">
          <div ng-include = "'partials/default.html'"></div>

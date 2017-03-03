@@ -19,13 +19,15 @@ function submitProfile($scope, $http){
       headers: {'Authorization': sessionStorage.getItem("token")}
     }).then(function(response){
       if(response.data.result == "success"){
+        sessionStorage.setItem("token", response.data.token);
         $scope.updateProfile = false;
         setDefaultMessage("Profile updated!");
         setDisplayPartial("default");
       }else{
         authenticationFailure(response.data);
       }
-    });  }
+    });
+  }
 
 }
 
