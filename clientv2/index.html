@@ -16,6 +16,7 @@
   <a href="#" class = "sideLink" ng-click="loadProfile()" ng-show="loggedIn">Profile</a>
   <a href="#" class = "sideLink" ng-click="loadStudentCourseView()" ng-show="loggedIn && !isAdmin">Courses</a>
   <a href="#" class = "sideLink" ng-click="loadAdmin()" ng-show="loggedIn && isAdmin">Course admin</a>
+  <!-- These will set up the side nav-bar 'buttons' properly. A method is also declared, one that will run when it is clicked. -->
   <a href="#" class = "sideLink" ng-click="loadCourseReg()" ng-show="loggedIn && !isAdmin">Register course</a>
   </nav>
 
@@ -32,8 +33,9 @@
       <div ng-switch-when="courses">
           <div ng-include="'partials/courses.html'"></div>
       </div>
-      <div ng-switch-when="courseRegister">
-          <div ng-include="'partials/courseRegister.html'"></div>
+      <!-- When the scope-variable displayPartial is set to registerCourse, include the partial registerCourse.html. -->
+      <div ng-switch-when="registerCourse">
+          <div ng-include="'partials/registerCourse.html'"></div>
       </div>
       <div ng-switch-when="groupJoin">
           <div ng-include="'partials/groupJoin.html'"></div>
