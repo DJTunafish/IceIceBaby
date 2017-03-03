@@ -74,3 +74,7 @@ input[type=text], input[type=password] {
 input[type=text]:focus, input[type=password]:focus {
     background-color: #adb9cc;
 }
+
+.courseButtons:hover{
+  color:blue;
+}

@@ -1,3 +1,6 @@
 <div ng-controller="coursesCtrl">
-    <span ng-repeat="course in myReggedCourses">{{course.coursecode}},{{course.name}}</span>
+    <h3>Your courses</h3>
+    <ul ng-repeat="course in myReggedCourses">
+        <div class="courseButtons" ng-click="loadCourse(course.coursecode)">{{course.coursecode}},{{course.name}}</div>
+    </ul>
 </div>

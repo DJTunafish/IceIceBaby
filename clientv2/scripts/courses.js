@@ -2,13 +2,11 @@
 
 //set myReggedCourses in the scope
 function setCourses($scope, reggedCourses){
-    console.log("the regged courses are " + reggedCourses.data.course);
-    $scope.myReggedCourses = reggedCourses.data.courses;
+    console.log("the regged courses are " + reggedCourses.data.courses);
 }
 
 //get all of a students regged courses
 function loadStudCourses($scope, $http){
-    var courseResponse = null;
     console.log("LOLOLOLOL");
     $.getScript('scripts/constants.js', function() {
 
@@ -21,8 +19,7 @@ function loadStudCourses($scope, $http){
             if (response.data.result == "success") {
                 console.log("Get /user/courses success");
                 sessionStorage.setItem("token", response.data.token);
-                courseResponse = response;
-                setCourses($scope, courseResponse);
+                $scope.myReggedCourses = response.data.courses;
             } else {
                 authenticationFailure(response.data);
             }
@@ -30,10 +27,4 @@ function loadStudCourses($scope, $http){
 
     });
 
-}
-//loadPage should contain logic to check whether loading the
-function loadCourses($scope){
-    console.log("register loadpage");
-    $scope.displayPartial = "register";
-    console.log("displayPartial set to register");
 }
