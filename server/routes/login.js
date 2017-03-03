@@ -39,7 +39,7 @@ router.post('/', function(req, res, next) {
                   cid: cid});
       });
     }else{
-      res.json({result: "failure"});
+      res.json({result: "failure row 42 in login.js"});
     }
   })(req, res, next);
 });

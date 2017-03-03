@@ -1,11 +1,12 @@
   function regUser($http, $scope){ //TODO: Check everything non-empty and shite
+    console.log($("#personnumber").val());
     $.getScript('scripts/constants.js', function() {
       $http({
-        method: 'POST', 
+        method: 'POST',
         url: serverURL + "/register",
         data: {cid: $("#cid").val(),
                firstname: $("#fName").val(),
-               lastname: $("#lName").val(), 
+               lastname: $("#lName").val(),
                personnumber: $("#personnumber").val(),
                password: $("#password").val(),
                email: $("#email").val()}
@@ -25,15 +26,9 @@
     });
   }
 
-  //loadPage should contain logic to check whether loading the 
+  //loadPage should contain logic to check whether loading the
   function loadRegPage($scope, $http){
     console.log("register loadpage");
     $scope.displayPartial = "register";
     console.log("displayPartial set to register");
   }
-
-
-
-
-
-
