@@ -28,6 +28,7 @@ router.get("/", function(req, res, next){
   }
 });
 
+//Should probably be under the student router if it just returns regged courses.
 router.get("/courses", function(req, res, next){
   var loggedIn = isLoggedIn(req, res);
   if(loggedIn){

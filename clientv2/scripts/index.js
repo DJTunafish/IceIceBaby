@@ -22,7 +22,7 @@
   //TODO: Check if token & cid already in sessionStorage
   mainApp.controller('myCtrl', function($scope, $http) {
     console.log("myCtrl");
-    console.log(sessionStorage.getItem("token"));
+    console.log("zup sluts " + sessionStorage.getItem("token"));
     getGScope = function(){
       return $scope;
     };
@@ -69,8 +69,17 @@
     //$.getScript('scripts/courses.js', function() {
     //console.log("in index.js/courseView");
     $scope.loadStudentCourseView = function(){
-      $scope.displayPartial = "courses"
+      $scope.displayPartial = "courses";
     }
+
+    $.getScript('scripts/course.js', function(){
+        $scope.loadCourse = function (courseCode) {
+            console.log("donkey dong loadcourse");
+            loadCourseInfo($scope, $http, courseCode);
+            $scope.displayPartial = "course";
+        }
+    })
+
     //});
 
     /*$.getScript('scripts/profile.js', function() {*/
@@ -114,6 +123,17 @@
     $.getScript('scripts/courses.js', function () {
       loadStudCourses($scope, $http);
     });
+   /* $.getScript('scripts/course.js', function () {
+        loadCourseInfo($scope,$http,sessionStorage.getItem("courseCode"));
+    })*/
+  });
+
+  //get info of a course
+  mainApp.controller('courseCtrl', function ($scope, $http) {
+    console.log("course ctrl running");
+    $.getScript('scripts/course.js'), function () {
+      loadCourseInfo($scope, $http);
+    }
   });
 
   mainApp.controller('profileCtrl', function($scope, $http){

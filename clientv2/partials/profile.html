@@ -5,9 +5,9 @@
     <b>cid:</b><span ng-bind="user"> </span><br>
     <b>Email:</b><span ng-bind="email"> </span><br>
     <h3>Registered courses</h3><br>
-     <span ng-repeat="course in reggedCourses">{{course.coursecode}},{{course.name}}</span>
+     <span ng-repeat="course in reggedCourses">{{course.coursecode}},{{course.name}}<br></span>
     <h3>Profile</h3><br>
-    <span ng-bind="profile" style="left-margin:5%"></span><br>
+     <span ng-bind="profile" style="text-align:center;"></span><br>
     <button ng-show="ownProfile" ng-click="updateProfileView()">Update profile/password</button>
   </div>
 

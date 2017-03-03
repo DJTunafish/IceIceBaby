@@ -13,13 +13,16 @@ router.use('/quiz', Quiz);
   Given a course (gencode), return the course entry associated with it.
 */
 router.get('/', function(req, res, next) {
-  Course.findAll({
-    where: {
-      gencode: req.query.gencode
-    }
-  }).then(function(course) {
-    res.json(course);
-  });
+  //var loggedIn = isLoggedIn(req, res);
+  //if(loggedIn) {
+      Course.findOne({
+          where: {
+              gencode: req.query.gencode
+          }
+      }).then(function (course) {
+          res.json({result: "success", courseResponse: course});
+      });
+  //}
 });
 
 /*

@@ -30,6 +30,9 @@
       <div ng-switch-when="courses">
           <div ng-include="'partials/courses.html'"></div>
       </div>
+      <div ng-switch-when="course">
+          <div ng-include="'partials/course.html'"></div>
+      </div>
       <div ng-switch-default ng-controller="defCtrl">
          <div ng-include = "'partials/default.html'"></div>
       </div>
