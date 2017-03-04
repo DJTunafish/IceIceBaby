@@ -39,6 +39,11 @@
   color:#000;
 }
 
+.clickable:hover{
+  text-decoration:underline;
+  background-color:#ccc;
+}
+
 .error{
   color:red;
 }
@@ -48,8 +53,12 @@
 }
 
 .largeText{
-  padding: 12px 20px;
-  margin: 8px 0;
+  resize:none;
+  height:200px;
+  width: 250px;
+  border-radius:4px;
+  padding: 6px 20px;
+  box-sizing: border-box;
 }
 
 button{

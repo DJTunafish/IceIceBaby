@@ -50,15 +50,13 @@ passport.use('login', new LocalStrategy({
     },
   function(req, cid, password, done) {
     console.log("Login auth strategy");
-    User.findOne({
-      where: { cid : cid }
-    }).then(function(user) {
+    User.findOne({ where: { cid : cid }}).then(function(user) {
       if (!user) {
         done(null, false, { message: 'Unknown user' });
         console.log("USER DOES NOT EXIST");
       } else if (!(bcrypt.compareSync(cid + password, user.password))) {
         done(null, false, { message: 'Invalid password'});
-        console.log("PASSWORD INCORRECT: " + user.password + " given was: " + password);
+        console.log("PASSWORD INCORRECT");
       } else {
         console.log("EVERYTHING FINE");
         done(null, cid);

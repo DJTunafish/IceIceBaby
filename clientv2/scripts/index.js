@@ -44,15 +44,19 @@
     }
 
     setLoggedOut = function() {
+      console.log("setLoggedOut");
       $scope.loggedIn = false;
       $scope.isAdmin = false;
+      sessionStorage.setItem("token", null);
+      sessionStorage.setItem("cid", null);
     }
-
-    $scope.defaultMsg = "Welcome to Ice!"
-
     //Set functions for loading each page
     //The .js file for every view should have a loadPage($scope) function,
     //which is used in the sidenav to load the partial.
+    $scope.setLoggedOut = function(){
+        setDefaultMessage("Logged out!");
+        setLoggedOut();
+    };
 
     $.getScript('scripts/login.js', function() {
       $scope.loadLogin = function(){
@@ -65,10 +69,21 @@
       }
     });
 
+    /*
+      Load in the script registerCourse.js, and link the method loadRegisterCoursePage (which is defined in there),
+      to the variable loadCourseReg. loadCourseReg() is the method being ran when a user clicks on Register course.
+    */
+    $.getScript('scripts/registerCourse.js', function() {
+      $scope.loadCourseReg = function(){
+        loadRegisterCoursePage($scope);
+      };
+    });
+
     //loads the view for a students courses
     //$.getScript('scripts/courses.js', function() {
     //console.log("in index.js/courseView");
     $scope.loadStudentCourseView = function(){
+/*<<<<<<< HEAD
       $scope.displayPartial = "courses";
     }
 
@@ -80,16 +95,48 @@
         }
     })
 
+=======*/
+      $scope.displayPartial = "courses"
+    }
     //});
 
     /*$.getScript('scripts/profile.js', function() {*/
     $scope.loadProfile = function(){
       console.log("Run loadProfile " + sessionStorage.getItem("token"));
       sessionStorage.setItem("desiredProfile", sessionStorage.getItem("cid")); //TODO: Hella ad-hoc solution, will do for now
+      $scope.displayPartial = "profile";
+    };
 
-        $scope.displayPartial = "profile";
+    console.log("'Bout to do session check stuff'");
+    if(sessionStorage.getItem("cid")){
+      console.log("Session data found");
+      $.getScript('scripts/constants.js', function(){
+        $http({
+          method: 'GET',
+          url: serverURL + "/user",
+          params: {cid: sessionStorage.getItem("cid")},
+          headers: {'Authorization': sessionStorage.getItem("token")}
+        }).then(function(response){
+          if(response.data.result == "success"){
+            console.log("Verification successful");
+            sessionStorage.setItem("token", response.data.token);
+            $scope.loggedIn = true;
+            $scope.defaultMsg = "Welcome, " + sessionStorage.getItem("cid");
+            if(response.data.isAdmin){
+              $scope.isAdmin = true;
+            }
+          }else{
+            console.log("Verification failed");
+            sessionStorage.setItem("cid", null);
+            sessionStorage.setItem("token", null);
+            $scope.defaultMsg = "Welcome to Ice!"
+          }
+        });
+      });
+    }else{
+      console.log("No stored session data");
+      $scope.defaultMsg = "Welcome to Ice!"
     }
-  /*  });*/
 
   });
 
@@ -112,9 +159,20 @@
 
   mainApp.controller('loginCtrl', function($scope, $http) {
     console.log("Set submitLogin n shit");
-    $scope.errorMsg = "Proof this exists, set in logInCtrl";
     $scope.submitLogin = function() {
       logIn($http, $scope);
+    };
+  });
+
+  /*
+    The controller for the register course partial. This is ran when the partial is first loaded, and its
+    main purpose is to link methods to any eventual buttons and other action-able items in the partial.
+  */
+  mainApp.controller('registerCourseCtrl', function($scope, $http) {
+    console.log("About to register to a course");
+    //$scope.displayPartial = "registerCourse";
+    $scope.registerCourse = function () {
+      registerToCourse($http, $scope);
     };
   });
 
@@ -143,6 +201,9 @@
       $scope.updateProfileView = function(){
         updateProfile($scope, $http);
       };
+      $scope.submitProfile = function(){
+        submitProfile($scope, $http);
+      };
       loadProfPage($scope, $http, sessionStorage.getItem("desiredProfile"));
     });
   });
@@ -156,4 +217,32 @@
       };
     }
     console.log(getGScope().loadProfile);*/
+  });
+
+
+  mainApp.controller('groupJoinCtrl', function($scope, $http){
+    $.getScript('scripts/groupJoin.js', function(){
+      if(inGroup($http, sessionStorage.getItem("currentCourse"), sessionStorage.getItem("cid"))){
+        setDefaultMessage("You already belong to a group in this course." +
+                          "Please leave your current group before joinin another.");
+        setDisplayPartial("default");
+      }else{
+        $scope.loadTinderSelect = function(){
+          loadTinderSelect($scope, $http, sessionStorage.getItem("currentCourse"));
+        };
+        $scope.loadGroupSelect = function(){
+          loadGroupSelect($scope, $http, sessionStorage.getItem("currentCourse"));
+        };
+        $scope.createGroup = function(){
+          createGroup($scope, $http, sessionStorage.getItem("currentCourse"));
+        };
+        $scope.showProfile = function(cid){
+          showProfile($scope, $http, sessionStorage.getItem("currentCourse"), cid);
+        };
+
+        $scope.joinGroup = function(groupNo){
+          joinGroup($scope, $http, sessionStorage.getItem("currentCourse"), groupNo);
+        };
+      }
+    });
   });

@@ -1,0 +1,21 @@
+<div ng-controller="groupJoinCtrl">
+  <span class="error" ng-bind="error"></span>
+  <div ng-show="!tinderSelect && !selectGroup">
+    <button ng-click="loadTinderSelect()">Matchmaking view</button>
+    <button ng-click="loadGroupSelect()">Manually select or create group</button>
+  </div>
+  <div ng-show="tinderSelect">
+  </div>
+  <div ng-show="selectGroup">
+    <div ng-repeat="group in groups">
+      <span class="label">Group no: </span>
+      <span> {{group.number}}</span><br>
+      <span class="label">Members:</span><br>
+      <div ng-repeat="member in group.members">
+        <span class="clickable" ng-click="showProfile(member)">{{member}}</span><br>
+      </div>
+      <button ng-click="joinGroup(group.number)">Join group</button>
+    </div>
+    <button ng-click="createGroup()">Create new group</button>
+  </div>
+</div>

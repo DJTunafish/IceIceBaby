@@ -2,11 +2,17 @@ var express = require('express');
 var router = express.Router();
 var sequelize = require('../db/ice_orm.js');
 var Sequelize = require('sequelize');
+var jwt = require("jwt-simple");
+
+var isLoggedIn = require('../auth/isLoggedIn.js');
+var constants = require("../resources/constants.js");
+
 
 var Course = require('../models/Course.js');
 var Quiz = require('./quiz.js');
 var Group = require('../models/Group.js');
 var Student = require('../models/Student.js');
+var RegisteredAt = require('../models/RegisteredAt.js');
 router.use('/quiz', Quiz);
 
 /*
@@ -95,6 +101,36 @@ router.get('/group', function(req, res, next) {
   // have to look into how to make join querys. Worst case scenario we just write it out.
 });
 
-
+router.post('/register', function(req, res, next){
+  var loggedIn = isLoggedIn(req, res);
+  if(loggedIn){
+    Course.findOne({where: {gencode : req.body.gencode}}).then(function(course){
+      var courseName = null;
+      var message = "";
+      if(course){
+        var decodedToken = jwt.decode(loggedIn.token, constants.secret);
+        RegisteredAt.findOne(
+          {where:
+            {student: decodedToken.user,
+             course: req.body.gencode}}).then(function(registered){
+          if(!registered){
+            RegisteredAt.create(
+              {student: decodedToken.user,
+               course: req.body.gencode,
+               score: 0
+              });
+          }else{
+            console.log("User already registered to course");
+            message = "Already registered to course";
+          }
+          res.json({result: "success", token:loggedIn.token, courseName: courseName, message: message});
+        });
+      }else{
+        message = "No such course exists";
+        res.json({result: "success", token:loggedIn.token, courseName: courseName, message: message});
+      }
+    });
+  }
+});
 
 module.exports = router;
