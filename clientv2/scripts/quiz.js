@@ -30,10 +30,15 @@ function submitQuizAnswers($scope, $http){
   var totalScore = 0;
 
   for(i=0; i < $scope.myQuizQuestions.length; i++){
-    if(true)//some check of correct answer and the answer given by user
-    totalScore += $scope.myQuizQuestions[i].weight;
+    //console.log('Input: ' + userAnswers[i]);
+    //console.log('Correct Answer: '+ $scope.myQuizQuestions[i].answer);
+
+    if(userAnswers[i]===$scope.myQuizQuestions[i].answer){
+      //console.log('CORRECT ANSWER!');
+      totalScore += $scope.myQuizQuestions[i].weight;
+    }
   }
   console.log('Din poäng är: ' + totalScore*100);
-  console.log(userAnswers);
+  //Här ska vi köra en post men oklart om det fungerar just nu
 
 }
