@@ -36,8 +36,8 @@ router.get('/questions', function(req, res, next) {
     where: {
       course: req.query.gencode
     }
-  }).then(function(questions) {
-    res.json(questions);
+  }).then(function(questionsResponse) {
+    res.json({result: "success", questions: questionsResponse});
   });
 });
 
