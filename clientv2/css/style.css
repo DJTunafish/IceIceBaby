@@ -86,4 +86,13 @@ input[type=text]:focus, input[type=password]:focus {
 
 .courseButtons:hover{
   color:blue;
+  cursor: crosshair;
+}
+.courseButtons {
+  color: navy;
+  font-weight:bold;
+  padding:3px 5px;
+  border:1px solid #aaa;
+  border-radius:3px;
+
 }

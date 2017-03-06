@@ -1,12 +1,16 @@
 function loadTinderSelect($scope, $http, course){
 }
 
+function displayGroupJoin($scope) {
+  $scope.displayPartial = "groupJoin";
+}
+
 function loadGroupSelect($scope, $http, course){
   $.getScript('scripts/constants.js', function() {
     $http({
       method: 'GET',
       url: serverURL + "/groups",
-      params: {course: course},
+      params: {course: sessionStorage.getItem("genCode")},
       headers: {'Authorization': sessionStorage.getItem("token")}
     }).then(function(response){
       if(response.data.result == "success"){
@@ -34,7 +38,7 @@ function createGroup($scope, $http, course){
       method: 'POST',
       url: serverURL + "/groups/join",
       data: {student: sessionStorage.getItem("cid"),
-             course: course},
+             course: sessionStorage.getItem("genCode")},
       headers: {'Authorization': sessionStorage.getItem("token")}
     }).then(function(response){
       if(response.data.result == "success"){
@@ -62,7 +66,7 @@ function joinGroup($scope, $http, course, groupNo){
       url: serverURL + "/groups/join",
       data: {id: groupNo,
              student: sessionStorage.getItem("cid"),
-             course: course},
+             course: sessionStorage.getItem("genCode")},
       headers: {'Authorization': sessionStorage.getItem("token")}
     }).then(function(response){
       if(response.data.result == "success"){
@@ -84,7 +88,7 @@ function inGroup($http, course, cid){
       $http({
         method: 'GET',
         url: serverURL + "/groups",
-        params: {course: course},
+        params: {course: sessionStorage.getItem("genCode")},
         headers: {'Authorization': sessionStorage.getItem("token")}
       }).then(function(response){
         for(let i = 0; i < response.data.groups.length;i++){

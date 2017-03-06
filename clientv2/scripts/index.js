@@ -69,24 +69,43 @@
       }
     });
 
+    /*
+      Load in the script registerCourse.js, and link the method loadRegisterCoursePage (which is defined in there),
+      to the variable loadCourseReg. loadCourseReg() is the method being ran when a user clicks on Register course.
+    */
+    $.getScript('scripts/registerCourse.js', function() {
+      $scope.loadCourseReg = function(){
+        loadRegisterCoursePage($scope);
+      };
+    });
+
+    /*
+      sets sessionstorage gencode to the coursecode given by the html file,
+      then displays the course info
+     */
+    $.getScript('scripts/course.js', function () {
+        $scope.loadCourse = function (courseCode) {
+          sessionStorage.setItem("genCode", courseCode);
+          displayCourseInfo($scope);
+        }
+    });
+
+    $.getScript('scripts/groupJoin.js', function () {
+      $scope.loadGroups = function () {
+        displayGroupJoin($scope);
+      }
+    })
+
     //loads the view for a students courses
-    //$.getScript('scripts/courses.js', function() {
-    //console.log("in index.js/courseView");
     $scope.loadStudentCourseView = function(){
       $scope.displayPartial = "courses"
     };
-    //});
 
     /*$.getScript('scripts/profile.js', function() {*/
     $scope.loadProfile = function(){
       console.log("Run loadProfile");
       sessionStorage.setItem("desiredProfile", sessionStorage.getItem("cid")); //TODO: Hella ad-hoc solution, will do for now
       $scope.displayPartial = "profile";
-    };
-
-    $scope.loadCourseReg = function(){
-      console.log("Run loadCourseReg");
-      $scope.displayPartial = "courseRegister"
     };
 
     console.log("'Bout to do session check stuff'");
@@ -146,12 +165,34 @@
     };
   });
 
+  /*
+    The controller for the register course partial. This is ran when the partial is first loaded, and its
+    main purpose is to link methods to any eventual buttons and other action-able items in the partial.
+  */
+  mainApp.controller('registerCourseCtrl', function($scope, $http) {
+    console.log("About to register to a course");
+    //$scope.displayPartial = "registerCourse";
+    $scope.registerCourse = function () {
+      registerToCourse($http, $scope);
+    };
+  });
+
   //courseCtrl to load a students courses
   mainApp.controller('coursesCtrl', function ($scope, $http) {
     console.log("Try to get courses");
     $.getScript('scripts/courses.js', function () {
       loadStudCourses($scope, $http);
     });
+  });
+
+  /*
+    Controller for a course, links loadCourseInfo til the courseCtrl html code
+   */
+  mainApp.controller('courseCtrl', function ($scope, $http) {
+     console.log("Try getting a course");
+     $.getScript('scripts/course.js', function () {
+             loadCourseInfo($scope, $http);
+     });
   });
 
   mainApp.controller('profileCtrl', function($scope, $http){
@@ -178,15 +219,6 @@
     console.log(getGScope().loadProfile);*/
   });
 
-  mainApp.controller('courseRegCtrl', function($scope, $http){
-    console.log("Controller for Course register view");
-    $.getScript('scripts/courseReg.js', function(){
-      $scope.registerCourse = function(){
-        console.log("Anonymous function for registerCourse");
-        registerCourse($scope, $http);
-      }
-    });
-  });
 
   mainApp.controller('groupJoinCtrl', function($scope, $http){
     $.getScript('scripts/groupJoin.js', function(){
