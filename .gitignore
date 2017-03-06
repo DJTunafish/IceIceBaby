@@ -103,6 +103,9 @@ flycheck_*.el
 # projectiles files
 .projectile
 
+# database
+db/
+
 # directory configuration
 .dir-locals.el
 
