@@ -79,13 +79,21 @@
       };
     });
 
+    /*
+      sets sessionstorage gencode to the coursecode given by the html file,
+      then displays the course info
+     */
+    $.getScript('scripts/course.js', function () {
+        $scope.loadCourse = function (courseCode) {
+          sessionStorage.setItem("genCode", courseCode);
+          displayCourseInfo($scope);
+        }
+    })
+
     //loads the view for a students courses
-    //$.getScript('scripts/courses.js', function() {
-    //console.log("in index.js/courseView");
     $scope.loadStudentCourseView = function(){
       $scope.displayPartial = "courses"
     };
-    //});
 
     /*$.getScript('scripts/profile.js', function() {*/
     $scope.loadProfile = function(){
@@ -169,6 +177,16 @@
     $.getScript('scripts/courses.js', function () {
       loadStudCourses($scope, $http);
     });
+  });
+
+  /*
+    Controller for a course, links loadCourseInfo til the courseCtrl html code
+   */
+  mainApp.controller('courseCtrl', function ($scope, $http) {
+     console.log("Try getting a course");
+     $.getScript('scripts/course.js', function () {
+             loadCourseInfo($scope, $http);
+     });
   });
 
   mainApp.controller('profileCtrl', function($scope, $http){
