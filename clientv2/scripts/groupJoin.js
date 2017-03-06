@@ -1,5 +1,4 @@
 function loadTinderSelect($scope, $http, course){
-//TODO
 }
 
 function loadGroupSelect($scope, $http, course){
@@ -73,6 +72,9 @@ function joinGroup($scope, $http, course, groupNo){
       }else{
         authenticationFailure(response.data);
       }
+    }).catch(function(error){
+      setDefaultMessage(error);
+      setDisplayPartial("default");
     });
   });
 }

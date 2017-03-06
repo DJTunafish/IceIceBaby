@@ -13,6 +13,7 @@ var Quiz = require('./quiz.js');
 var Group = require('../models/Group.js');
 var Student = require('../models/Student.js');
 var RegisteredAt = require('../models/RegisteredAt.js');
+var User = require('../models/User.js');
 router.use('/quiz', Quiz);
 
 /*
@@ -40,6 +41,68 @@ router.get('/allgroups', function(req, res, next) {
   }).then(function(course) {
     res.json(course);
   });
+});
+
+/*
+ Feth all ungrouped students, for group matching purposes
+*/
+router.get('/ungrouped', function(req, res, next){
+  //var loggedIn = isLoggedIn(req, res);
+  //if(loggedIn){
+  /*  Group.findAll({where : {course: req.query.course}})
+    .then(function(allGroups){
+      var cids = new Array();
+      for(let i = 0; i < allGroups.length; i++){
+        cids.push(allGroups[i].student);
+      }
+      RegisteredAt.findAll({where:{
+        course: req.query.course,
+        $not: {
+          student: {
+            $in: cids
+          }
+        }
+      },
+      order: 'student DESC'
+      })
+      .then(function(registrations){
+        cids = new Array();
+        for(let i= 0; i < registrations.length; i++){
+          cids.push(registrations[i].student);
+        }
+        Student.findAll({ //TODO: SORT THE QUERY RESULTS
+          where: {
+            cid: {
+              $in: cids
+            }
+          },
+          order: 'cid DESC'
+        }]).then(function(students){
+          User.findAll({
+            where: {
+              cid: {
+                $in: cids
+              }
+            },
+            order: 'cid DESC'
+          }).then(function(users){
+            //TODO: Compile data into one array of objects
+            var profiles;
+            console.log("HERE COMES THE FOR");
+            for(let i= 0; i < users.length; i++){
+              console.log(users[i].cid);
+              console.log(students[i].cid);
+              console.log(registrations[i].student);
+              var profile = {};
+              profiles.push(profile);
+            }
+            res.json({result: "success", token: loggedIn.token, students: profiles});
+          });
+        });
+      });
+
+    });*/
+//  }
 });
 
 

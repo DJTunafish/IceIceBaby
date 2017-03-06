@@ -47,30 +47,46 @@ router.post('/join', function(req, res, next) {
   if(loggedIn){
     if(req.body.id){
       console.log("Joining existing group");
-      Group.build({
-        id: parseInt(req.body.id),
+      Group.findOne({where: {
         student: req.body.student,
         course: req.body.course
-      }).save().then(function() {
-        res.json({result: "success", token: loggedIn.token});
-      }).catch(function(err) {
-        res.status(500).send((err + "\n"));
+      }}).then(function(result){
+        if(!result){
+          Group.build({
+            id: parseInt(req.body.id),
+            student: req.body.student,
+            course: req.body.course
+          }).save().then(function() {
+            res.json({result: "success", token: loggedIn.token});
+          }).catch(function(err) {
+            res.status(500).send((err + "\n"));
+          });
+        }else{
+          res.status(403).send("Forbidden to join group before exiting current group");
+        }
       });
     }else{
-      console.log(req.body.course);
-      Group.max('id',
-        {where: {course: req.body.course}})
-      .then(function(maxId){
-        Group.build({
-          id: maxId + 1,
-          student: req.body.student,
-          course: req.body.course
-        }).save().then(function() {
-          res.json({result: "success", token: loggedIn.token});
-        }).catch(function(err) {
-          res.status(500).send((err + "\n"));
-        });
+      Group.findOne().then(function(result){
+        if(!result){
+          Group.max('id',
+            {where: {course: req.body.course}})
+          .then(function(maxId){
+            Group.build({
+              id: maxId + 1,
+              student: req.body.student,
+              course: req.body.course
+            }).save().then(function() {
+              res.json({result: "success", token: loggedIn.token});
+            }).catch(function(err) {
+              res.status(500).send((err + "\n"));
+            });
+          });
+        }else{
+          res.status(403).send("Forbidden to join group before exiting current group");
+        }
       });
+
+
     }
 
   }
