@@ -1,6 +1,8 @@
 
 <div ng-controller="courseCtrl">
     <h3>Course information</h3>
-    <span ng-bind="courseInfo"></span>
+    <span ng-bind="courseInfo"></span><br>
+    <div>BAJS</div>
+    <div class="courseButtons" ng-click="loadGroups()" ng-show="loggedIn && !isAdmin">Groups</div>
 
 </div>

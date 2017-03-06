@@ -88,6 +88,12 @@
           sessionStorage.setItem("genCode", courseCode);
           displayCourseInfo($scope);
         }
+    });
+
+    $.getScript('scripts/groupJoin.js', function () {
+      $scope.loadGroups = function () {
+        displayGroupJoin($scope);
+      }
     })
 
     //loads the view for a students courses
