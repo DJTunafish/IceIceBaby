@@ -49,6 +49,8 @@
       $scope.isAdmin = false;
       sessionStorage.setItem("token", null);
       sessionStorage.setItem("cid", null);
+      setDisplayPartial("default");
+      setDefaultMessage("Welcome to ICE! Please log in or register.");
     }
     //Set functions for loading each page
     //The .js file for every view should have a loadPage($scope) function,

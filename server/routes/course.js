@@ -175,13 +175,15 @@ router.post('/register', function(req, res, next){
         RegisteredAt.findOne(
           {where:
             {student: decodedToken.user,
-             course: req.body.gencode}}).then(function(registered){
+             course: req.body.gencode}})
+        .then(function(registered){
           if(!registered){
             RegisteredAt.create(
               {student: decodedToken.user,
                course: req.body.gencode,
                score: 0
               });
+              message = "Successfully registered to course " + req.body.gencode;
           }else{
             console.log("User already registered to course");
             message = "Already registered to course";
