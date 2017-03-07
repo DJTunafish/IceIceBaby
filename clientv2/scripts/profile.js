@@ -48,6 +48,7 @@ function loadProfPage($scope, $http, cid){
   var userResponse = null;
   var coursesResponse = null;
   $.getScript('scripts/constants.js', function() {
+    /* Check that there is a student with this CID */
     $http({
       method: 'GET',
       url: serverURL + "/student",
@@ -58,6 +59,7 @@ function loadProfPage($scope, $http, cid){
           console.log("Get /student success");
           sessionStorage.setItem("token", response.data.token);
           studentResponse = response;
+          /* If there is a student, retrieve the user-entry associated with it */
           $http({
             method: 'GET',
             url: serverURL + "/user",
@@ -68,6 +70,7 @@ function loadProfPage($scope, $http, cid){
               console.log("Get /user success");
               sessionStorage.setItem("token", response.data.token);
               userResponse = response;
+              /* Retrieve the courses the user is registered at */
               $http({
                 method: 'GET',
                 url: serverURL + "/user/courses",
