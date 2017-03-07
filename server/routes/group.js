@@ -7,6 +7,7 @@ var constants = require("../resources/constants.js");
 
 var Group = require('../models/Group.js');
 var RegisteredAt = require('../models/RegisteredAt.js');
+var GroupInvite = require('../models/GroupInvite.js');
 
 router.get('/', function(req, res, next) {
   var loggedIn = isLoggedIn(req, res);
@@ -115,6 +116,29 @@ router.post('/leave', function(req, res, next) {
   }).catch(function(err) {
     res.status(500).send("something went wrong while leaving the group");
   });
+});
+
+router.post('/invite', function(req, res, next){
+  var loggedIn = isLoggedIn(req, res);
+  if(loggedIn){
+    var decodedToken = jwt.decode(loggedIn.token, constants.secret);
+    GroupInvite.findOne({where: {
+      course: req.body.course,
+      sender: decodedToken.user,
+      receiver: req.body.receiver
+    }}).then(function(previousInvite){
+      if(!previousInvite){
+        GroupInvite.create({
+          course: req.body.course,
+          sender: decodedToken.user,
+          receiver: req.body.receiver}).then(function(){
+          res.json({result: "success", message: "Successfully sent invite", token: loggedIn.token});
+        });
+      }else{
+        res.json({result: "success", message: "Invite already sent to this user", token: loggedIn.token});
+      }
+    });
+  }
 });
 
 module.exports = router;

@@ -37,6 +37,7 @@
 .sideLink:hover{
   background-color:#ccc;
   color:#000;
+  cursor: crosshair;
 }
 
 .clickable:hover{
