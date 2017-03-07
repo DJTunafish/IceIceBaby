@@ -25,7 +25,7 @@ router.get('/groups', function(req, res, next) {
 router.get('/', function(req, res) {
     var loggedIn = isLoggedIn(req, res);
     if(loggedIn){
-      Student.findAll({
+      Student.findOne({
         where: {
           cid: req.query.cid
         }
