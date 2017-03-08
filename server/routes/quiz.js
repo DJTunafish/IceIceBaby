@@ -19,10 +19,11 @@ router.post('/score', function(req, res, next) {
     }
   }).then(function(old) {
     res.json(old);
+    console.log(old);
     old.update({
       score: parseInt(req.body.score)
     }).then(function() {
-      res.sendStatus(200);
+        res.json({result: "success", token:loggedIn.token,});
     });
   });
 });

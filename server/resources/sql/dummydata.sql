@@ -25,10 +25,10 @@ VALUES
 
 INSERT INTO Question (question,answer, weight, course)
 VALUES
-  ("How tall is Robert?", "lång som fan", 1.0, "abcde"),
-  ("How tall is Erik?", "medel", 0.33, "abcdf"),
-  ("How tall is Aleksander?", "lagom", 0.33, "abcdf"),
-  ("How tall is Adam?", "oklart", 0.33, "abcdf");
+  ("How tall is Robert?", 1.0, "abcde"),
+  ("How tall is Erik?", 0.33, "abcdf"),
+  ("How tall is Aleksander?", 0.33, "abcdf"),
+  ("How tall is Adam?",  0.33, "abcdf");
 
 INSERT INTO RegisteredAt (student, course, score)
 VALUES
