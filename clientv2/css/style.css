@@ -45,6 +45,20 @@
   background-color:#ccc;
 }
 
+
+.courseButtons:hover{
+  color:blue;
+  cursor: crosshair;
+}
+.courseButtons {
+  color: navy;
+  font-weight:bold;
+  padding:3px 5px;
+  border:1px solid #aaa;
+  border-radius:3px;
+  width:35%;
+}
+
 .error{
   color:red;
 }
@@ -60,19 +74,6 @@
   border-radius:4px;
   padding: 6px 20px;
   box-sizing: border-box;
-}
-
-.courseButtons:hover{
-  color:blue;
-  cursor: crosshair;
-}
-.courseButtons {
-  color: navy;
-  font-weight:bold;
-  padding:3px 5px;
-  border:1px solid #aaa;
-  border-radius:3px;
-  width:35%;
 }
 
 button{
