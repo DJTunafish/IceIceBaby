@@ -18,12 +18,12 @@ router.post('/score', function(req, res, next) {
       course: req.body.gencode
     }
   }).then(function(old) {
-    res.json(old);
-    console.log(old);
+    console.log(req.body.score);
+    console.log(old.score);
     old.update({
       score: parseInt(req.body.score)
     }).then(function() {
-        res.json({result: "success", token:loggedIn.token,});
+        res.json({result: "success" });
     });
   });
 });

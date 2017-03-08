@@ -39,7 +39,7 @@ function submitQuizAnswers($scope, $http){
     $http({
       method: 'POST',
       url: serverURL + "/quiz/score",
-      data: {gencode: 'abcdf', cid: , score: totalScore},
+      data: {gencode: 'abcdf', cid: 'alekaar',score: totalScore},
       headers: {'Authorization': sessionStorage.getItem("token")}
     }).then(function(response) {
       console.log(response);
