@@ -44,3 +44,10 @@ CREATE TABLE IF NOT EXISTS RegisteredAt (
   score SMALLINT,
   PRIMARY KEY (student, course)
   );
+
+CREATE TABLE IF NOT EXISTS GroupInvite (
+  course VARCHAR(5) REFERENCES Course(gencode),
+  sender VARCHAR(20) REFERENCES Student(cid),
+  receiver VARCHAR(20) REFERENCES Student(cid),
+  PRIMARY KEY(course, sender, receiver)
+);
