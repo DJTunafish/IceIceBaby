@@ -1,6 +1,6 @@
 drop trigger if exists Groups.group_check;
 
-drop table User, Student, Admin, Course, Question, Groups, RegisteredAt;
+drop table User, Student, Admin, Course, Question, Groups, RegisteredAt, GroupInvite;
 
 source create_tables.sql;
 source views.sql;

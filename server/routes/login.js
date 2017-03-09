@@ -8,20 +8,6 @@ var User    = require('../models/User.js');
 var jwt = require("jwt-simple");
 var constants = require("../resources/constants.js");
 
-/*router.post('/',
-  passport.authenticate('login', { failWithError: true }),
-  function(req, res, next) {
-    // handle success
-    return res.json({result: "success"}); //TODO TODO TODO: Check if user is in Admin table, include information about this in json
-  },
-  function(err, req, res, next) {
-    // handle error
-    return res.json({result: "failure"});
-  }
-);*/
-
-
-
 router.post('/', function(req, res, next) {
   passport.authenticate('login', function(err, cid, info) {
     if(cid){
