@@ -16,6 +16,7 @@
   <a href="#" class = "sideLink" ng-click="loadProfile()" ng-show="loggedIn">Profile</a>
   <a href="#" class = "sideLink" ng-click="loadStudentCourseView()" ng-show="loggedIn && !isAdmin">Courses</a>
   <a href="#" class = "sideLink" ng-click="loadAdmin()" ng-show="loggedIn && isAdmin">Course admin</a>
+  <a href="#" class = "sideLink" ng-click="loadGroupManagement()" ng-show="loggedIn && !isAdmin">Group management</a>
   <!-- These will set up the side nav-bar 'buttons' properly. A method is also declared, one that will run when it is clicked. -->
   <a href="#" class = "sideLink" ng-click="loadCourseReg()" ng-show="loggedIn && !isAdmin">Register course</a>
   </nav>
@@ -42,6 +43,9 @@
       </div>
       <div ng-switch-when="course">
           <div ng-include="'partials/course.html'"></div>
+      </div>
+      <div ng-switch-when="groupManagement">
+          <div ng-include="'partials/groupManagement.html'"></div>
       </div>
       <div ng-switch-default ng-controller="defCtrl">
          <div ng-include = "'partials/default.html'"></div>

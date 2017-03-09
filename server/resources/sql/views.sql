@@ -7,7 +7,7 @@
   is not a part of any group in the course.
 */
 CREATE OR REPLACE VIEW ungroupedStudents AS
-    SELECT Student.cid,RegisteredAt.course, firstname,lastname,email,profile
+    SELECT Student.cid,RegisteredAt.course, firstname,lastname,email,profile, score
     FROM Student,RegisteredAt,User
     WHERE
     Student.cid = RegisteredAt.student AND User.cid=Student.cid

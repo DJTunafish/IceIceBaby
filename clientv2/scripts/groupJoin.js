@@ -1,6 +1,8 @@
 var suitors;
 var suitorIndex;
 
+//TODO: Don't allow user to see either view when already in group?
+
 function loadTinderSelect($scope, $http, course){
  //TODO: handle case where there are no other ungrouped students
   $.getScript('scripts/constants.js', function() {
@@ -42,6 +44,7 @@ function updateSuitor($scope){
   $scope.name = suitors[suitorIndex].firstname + " " + suitors[suitorIndex].lastname;
   $scope.profile = suitors[suitorIndex].profile;
   $scope.email = suitors[suitorIndex].email;
+  $scope.cid = suitors[suitorIndex].cid;
 }
 
 function prevSuitor($scope){
@@ -52,7 +55,26 @@ function prevSuitor($scope){
 }
 
 function sendInvite($scope, $http, invitee){
-//TODO, once proper route exists
+  console.log("sendInvite");
+  $.getScript('scripts/constants.js', function() {
+    $http({
+      method: 'POST',
+      url: serverURL + "/groups/invite",
+      data: {course: sessionStorage.getItem("genCode"),
+             receiver: invitee},
+      headers: {'Authorization': sessionStorage.getItem("token")}
+    }).then(function(response){
+      if(response.data.result == "success"){
+        sessionStorage.setItem("token", response.data.token);
+        setDefaultMessage(response.data.message);
+        setDisplayPartial("default");
+      }else{
+        authenticationFailure(response.data);
+      }
+    }).catch(function(error){
+
+    });
+  });
 }
 
 function nextSuitor($scope){

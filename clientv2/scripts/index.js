@@ -110,6 +110,11 @@
       $scope.displayPartial = "profile";
     };
 
+    $scope.loadGroupManagement = function(){
+      console.log("Load groupManagement");
+      $scope.displayPartial = "groupManagement";
+    }
+
     console.log("'Bout to do session check stuff'");
     if(sessionStorage.getItem("cid")){
       console.log("Session data found");
@@ -245,6 +250,39 @@
         $scope.joinGroup = function(groupNo){
           joinGroup($scope, $http, sessionStorage.getItem("currentCourse"), groupNo);
         };
+        $scope.prevSuitor = function(){
+          prevSuitor($scope);
+        };
+        $scope.sendInvite = function(invitee){
+          sendInvite($scope, $http, invitee);
+        };
+        $scope.nextSuitor = function(){
+          nextSuitor($scope);
+        };
       }
+    });
+  });
+
+  mainApp.controller('groupManageCtrl', function($scope, $http){
+    $.getScript('scripts/groupManagement.js', function(){
+      $scope.acceptInvite = function(sender, course){
+        acceptInvite($scope, $http, course, sender);
+      };
+
+      $scope.leaveGroup = function(groupNo, course){
+        leaveGroup($scope, $http, groupNo, course);
+      };
+
+      $scope.loadGroupInvites = function(){
+        loadGroupInvites($scope, $http);
+      };
+
+      $scope.loadGroupList = function(){
+        loadGroupList($scope, $http);
+      };
+
+      $scope.showProfile = function(cid){
+        showProfile($scope, $http, cid);
+      };
     });
   });

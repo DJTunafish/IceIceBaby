@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require("jwt-simple");
 var bcrypt   = require('bcrypt-nodejs');
+var sequelize = require('../db/ice_orm.js');
 var isLoggedIn = require('../auth/isLoggedIn.js');
 var constants = require("../resources/constants.js");
 var User = require('../models/User');
@@ -9,6 +10,7 @@ var RegisteredAt = require('../models/RegisteredAt');
 var Course = require('../models/Course');
 var Admin = require('../models/Admin');
 var Student = require('../models/Student');
+var Group = require('../models/Group.js');
 
 
 router.get("/", function(req, res, next){
@@ -57,6 +59,55 @@ router.get("/courses", function(req, res, next){
         }
       }).then(function(coursesResponse){
         res.json({result: "success", courses: coursesResponse, token: loggedIn.token});
+      });
+    });
+  }
+});
+//TODO: Assumes that given user is in at least one group
+router.get('/groups', function(req, res, next){
+  var loggedIn = isLoggedIn(req, res);
+  if(loggedIn){
+    var decodedToken = jwt.decode(loggedIn.token, constants.secret);
+    Group.findAll({where: {
+      student: decodedToken.user
+    }}).then(function(studentGroups){
+      var queryQualifiers="";
+      for(let i = 0; i < studentGroups.length; i++){
+        if(i != 0){
+          queryQualifiers = queryQualifiers + " OR ";
+        }
+        queryQualifiers = queryQualifiers + " (id=" + studentGroups[i].id +
+        " AND course=\'" + studentGroups[i].course + "\' )";
+      }
+      console.log("SELECT * FROM GroupMembers WHERE" + queryQualifiers +
+      " ORDER BY course DESC");
+      sequelize.query("SELECT * FROM GroupMembers WHERE" + queryQualifiers +
+      " ORDER BY course DESC", { type: sequelize.QueryTypes.SELECT})
+      .then(function(members) {
+        var groups = new Array();
+        for(let j= 0; j < members.length; j++){
+          if(j == 0 || members[j].course != groups[groups.length - 1].course){
+            groups.push({course: members[j].course,
+                         id: members[j].id,
+                         members: [{
+                           cid: members[j].cid,
+                           firstname: members[j].firstname,
+                           lastname: members[j].lastname,
+                           email: members[j].email,
+                           profile: members[j].profile
+                         }]});
+          }else{
+            groups[groups.length - 1].members.push({
+              cid: members[j].cid,
+              firstname: members[j].firstname,
+              lastname: members[j].lastname,
+              email: members[j].email,
+              profile: members[j].profile
+            });
+          }
+        }
+        console.log("GROUPS " + groups);
+        res.json({result: "success", token: loggedIn.token, groups: groups});
       });
     });
   }

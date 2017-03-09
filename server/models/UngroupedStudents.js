@@ -17,6 +17,21 @@ var UngroupedStudents = sequelize.define('ungroupedStudents', {
       key: 'cid'
     }
   },
+  firstname: {
+    type: Sequelize.STRING
+  },
+  lastname: {
+    type: Sequelize.STRING
+  },
+  email: {
+    type: Sequelize.STRING
+  },
+  profile: {
+    type: Sequelize.STRING
+  },
+  score: {
+    type: Sequelize.INTEGER
+  },
   course: {
     type: Sequelize.STRING,
     references: {
@@ -24,7 +39,7 @@ var UngroupedStudents = sequelize.define('ungroupedStudents', {
       key: 'gencode'
     }
   }
-},
+  },
 {
   timestamps: false,
   freezeTableName: true

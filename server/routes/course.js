@@ -55,11 +55,13 @@ router.get('/allgroups', function(req, res, next) {
 router.get('/ungrouped', function(req, res, next){
   var loggedIn = isLoggedIn(req, res);
   if(loggedIn){
+    console.log("Call to UngroupedStudents");
     UngroupedStudents.findAll({
       where: {
         course: req.query.course
       }
     }).then(function(students) {
+      console.log("Response from UngroupedStudents");
       res.json({result: "success", token:loggedIn.token, ungroupedStudents: students});
     });
   } else {

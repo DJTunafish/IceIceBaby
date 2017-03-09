@@ -7,6 +7,7 @@ var Course = require('./Course.js');
 var groupInvite = sequelize.define('GroupInvite', {
   sender: {
     type: Sequelize.STRING,
+    primaryKey: true,
     references: {
       model: Student,
       key  : 'cid'
