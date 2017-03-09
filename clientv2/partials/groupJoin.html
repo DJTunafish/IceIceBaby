@@ -23,8 +23,8 @@
       <div ng-repeat="member in group.members">
         <span class="clickable" ng-click="showProfile(member)">{{member}}</span><br>
       </div>
-      <button ng-click="joinGroup(group.number)">Join group</button>
+      <button ng-click="joinGroup(group.number)" ng-show="!isAdmin">Join group</button>
     </div>
-    <button ng-click="createGroup()">Create new group</button>
+    <button ng-click="createGroup()" ng-show="!isAdmin">Create new group</button>
   </div>
 </div>

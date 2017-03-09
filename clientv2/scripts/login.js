@@ -5,6 +5,7 @@ function logIn($http, $scope){
       method: 'POST',
       url: serverURL + "/login",
       data: {cid: $("#cid").val(),
+             //should probably encrypt the password before adding it here
              password: $("#password").val()}
       }).then(function successCallback(response) {
           console.log(response.data.result);
@@ -13,7 +14,7 @@ function logIn($http, $scope){
               sessionStorage.setItem("token", response.data.token);
               sessionStorage.setItem("cid", response.data.cid);
               setLoggedIn();
-              if(response.data.access == "admin"){
+              if(response.data.isadmin){
                 setAdmin();
               }
               console.log("Sessionstorage: " + sessionStorage.getItem("token"));
