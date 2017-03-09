@@ -20,23 +20,19 @@ router.get('/groups', function(req, res, next) {
 /*
   Given a student (cid), return the profile of the user.
 */
-router.get('/', function(req, res, next) {
-  Student.findOne({
-    where: {
-      cid: req.query.cid
-    }
-  }).then(function(student) {
-    res.json(student);
-  });
+router.get('/', function(req, res) {
+  var loggedIn = isLoggedIn(req, res);
+  if (loggedIn) {
+    Student.findOne({
+      where: {
+        cid: req.query.cid
+      }
+    }).then(function(student) {
+      res.json({result: "success", student: student, token: loggedIn.token});
+    });
+  }
 });
 
-router.post('/join/course', function(req, res, next) {
-
-});
-
-
-
-
-
+router.post('/join/course', function(req, res, next) {});
 
 module.exports = router;

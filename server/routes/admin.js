@@ -36,5 +36,18 @@ router.post('/createcourse', function(req, res, next){
   });
 });
 
+//removes a course with the given gencode
+router.post('/removecourse', function(req, res, next) {
+  Course.destroy({
+    where: {
+      gencode: req.body.gencode
+    }
+  }).then(function() {
+    res.status(200).send("removed properly");
+  }).catch(function(err) {
+    res.status(500).send("error, the course didnt get removed");
+  });
+});
+
 
 module.exports = router;
