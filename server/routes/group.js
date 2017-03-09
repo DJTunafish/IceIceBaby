@@ -42,8 +42,10 @@ router.get('/', function(req, res, next) {
 /*
   Given a student (cid), course (gencode) and a group-id (id), enlists a student in a group.
   Returns 200 if successful, else 500.
+<<<<<<< HEAD
 */ //TODO: Check that user isn't already member of group in given course
    //TODO: Delete group invites for user joining group?
+
 router.post('/join', function(req, res, next) {
   var loggedIn = isLoggedIn(req, res);
   if(loggedIn){

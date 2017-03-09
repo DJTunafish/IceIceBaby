@@ -71,6 +71,12 @@
       }
     });
 
+    $.getScript('scripts/createCourse.js', function () {
+        $scope.loadCreateCourse = function () {
+            displayCreateCourse($scope);
+        }
+    })
+
     /*
       Load in the script registerCourse.js, and link the method loadRegisterCoursePage (which is defined in there),
       to the variable loadCourseReg. loadCourseReg() is the method being ran when a user clicks on Register course.
@@ -164,6 +170,14 @@
 
     console.log("HI HO");
   });
+
+  //controller for creating a course
+  mainApp.controller('createCourseCtrl', function ($scope, $http) {
+    $scope.errorMsg = '';
+    $scope.submitCreateCourse = function(){
+      createCourse($scope,$http);
+    }
+  })
 
   mainApp.controller('loginCtrl', function($scope, $http) {
     console.log("Set submitLogin n shit");
