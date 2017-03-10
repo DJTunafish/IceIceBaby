@@ -173,9 +173,9 @@
 
   //controller for creating a course
   mainApp.controller('createCourseCtrl', function ($scope, $http) {
-    $scope.errorMsg = '';
+    //$scope.errorMsg = '';
     $scope.submitCreateCourse = function(){
-      createCourse($scope,$http);
+      createCourse($http, $scope);
     }
   })
 

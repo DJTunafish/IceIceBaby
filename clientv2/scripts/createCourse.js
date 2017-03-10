@@ -3,9 +3,10 @@
 function createCourse($http, $scope){
     console.log($("#gencode").val());
     $.getScript('scripts/constants.js', function() {
+        console.log("in createCourse");
         $http({
             method: 'POST',
-            url: serverURL + "/createcourse",
+            url: serverURL + "/admin/createcourse",
             data: {gencode: $("#gencode").val(),
                 coursecode: $("#coursecode").val(),
                 name: $("#name").val(),
@@ -20,7 +21,7 @@ function createCourse($http, $scope){
                 $scope.errorMsg = "Failed to create new course. Course already exists"
             }
         }, function errorCallback(response) {
-            console.log("FAILURE");
+            console.log("FAILURE" + response.data.result);
         });
     });
 }
