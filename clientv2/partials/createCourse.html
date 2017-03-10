@@ -1,13 +1,30 @@
 <div ng-controller="createCourseCtrl">
-    <form novalidate>
-        gencode:<br>
-        <input id="gencode" type="text"><br>
-        course code:<br>
-        <input id="coursecode" type="text"><br>
-        Name:<br>
-        <input id="name" type="text"><br>
-        Course description:<br>
-        <input id="cDesc" type="text"><br>
-        <button ng-click="submitCreateCourse()">Create</button>
+    <form novalidate class="form-style">
+        <li><label>Generated Code</label>
+            <input id="gencode" type="text" placeholder="The supplied code"
+                   required
+                   data-fv-notempty-message="The generated code is required">
+        </li>
+        <li><label>Course Code</label>
+            <input id="coursecode" type="text" placeholder="Course code"
+                   required
+                   data-fv-notempty-message="The generated code is required">
+        </li>
+        <li><label>Name</label>
+            <input id="name" type="text" placeholder="Name of the course"
+                   required
+                   data-fv-notempty-message="The generated code is required">
+        </li>
+        <li><label>Description</label>
+            <textarea id="cDesc" type="text" class="field-area"
+                      placeholder="Enter a short description of the course"
+                      required
+                      data-fv-notempty-message="The generated code is required">
+                
+            </textarea>
+        </li>
+        <li>
+            <button ng-click="submitCreateCourse()">Create</button>
+        </li>
     </form>
 </div>

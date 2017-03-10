@@ -63,6 +63,31 @@
   color:red;
 }
 
+.form-style {
+  margin:8px auto;
+  max-width: 300px;
+  padding: 20px 12px 10px 20px;
+  font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.form-style .field-area{
+  height: 80px;
+}
+
+.form-style label{
+  margin:0 0 3px 0;
+  padding:0px;
+  display:block;
+  font-weight: bold;
+}
+
+.form-style li {
+  padding: 0;
+  display: block;
+  list-style: none;
+  margin: 10px 0 0 0;
+}
+
 .label{
   font-weight: bold;
 }
@@ -97,4 +122,11 @@ input[type=text], input[type=password] {
 
 input[type=text]:focus, input[type=password]:focus {
     background-color: #adb9cc;
+}
+input:required:invalid {
+  border: 1px solid red;
+}
+
+textarea:required:invalid{
+  border: 1px solid red;
 }
