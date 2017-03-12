@@ -31,15 +31,18 @@ function submitQuizAnswers($scope, $http){
   for(i=0; i < $scope.myQuizQuestions.length; i++){
     console.log('Input: ' + userAnswers[i]);
     totalScore+= (userAnswers[i]*$scope.myQuizQuestions[i].weight)
-
   }
+
+//Multiplie the score by ten because the sum of questionScores * questionWeight can be maximun 10 and score in databases is from 0-100
+  totalScore*=10;
   console.log('Din poäng är: ' + totalScore);
+
   //Här ska vi köra en post men oklart om det fungerar just nu
   $.getScript('scripts/constants.js', function() {
     $http({
       method: 'POST',
       url: serverURL + "/quiz/score",
-      data: {gencode: 'abcdf', cid: 'alekaar',score: totalScore},
+      data: {gencode: 'abcdf', cid: 'asd',score: totalScore},
       headers: {'Authorization': sessionStorage.getItem("token")}
     }).then(function(response) {
       console.log(response);
