@@ -34,8 +34,9 @@ router.post('/createcourse', function(req, res, next){
     description: req.body.description,
     admin: req.body.admin
   }).save().then(function() {
-    res.sendStatus(200);
+      res.json({result: "success"});
   }).catch(function(err) {
+    console.log("Skit")
     res.status(500).send((err + "\n"));
   });
 });

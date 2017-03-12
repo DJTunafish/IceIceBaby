@@ -6,7 +6,7 @@ function loadQuiz($scope, $http){
         $http({
         method: 'GET',
         url: serverURL + "/quiz/questions",
-        params: {gencode: 'abcdf'},
+        params: {gencode: sessionStorage.getItem('genCode')},
         headers: {'Authorization': sessionStorage.getItem("token")}
         }).then(function(response) {
             if (response.data.result == "success") {
@@ -38,11 +38,12 @@ function submitQuizAnswers($scope, $http){
   console.log('Din poäng är: ' + totalScore);
 
   //Här ska vi köra en post men oklart om det fungerar just nu
+  console.log('Gencode i sessionstorage är : '+sessionStorage.getItem("genCode"));
   $.getScript('scripts/constants.js', function() {
     $http({
       method: 'POST',
       url: serverURL + "/quiz/score",
-      data: {gencode: 'abcdf', cid: 'asd',score: totalScore},
+      data: {gencode: 'abcdf', cid: sessionStorage.getItem("cid"),score: totalScore},
       headers: {'Authorization': sessionStorage.getItem("token")}
     }).then(function(response) {
       console.log(response);
@@ -57,3 +58,7 @@ function submitQuizAnswers($scope, $http){
   })
 
 }
+/*
+data: {student: sessionStorage.getItem("cid"),
+       course: sessionStorage.getItem("genCode")},
+*/

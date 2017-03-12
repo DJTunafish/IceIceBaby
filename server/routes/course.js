@@ -13,6 +13,10 @@ var Quiz = require('./quiz.js');
 var Group = require('../models/Group.js');
 var Student = require('../models/Student.js');
 var RegisteredAt = require('../models/RegisteredAt.js');
+var User = require('../models/User.js');
+var UngroupedStudents = require('../models/UngroupedStudents.js');
+var GroupMembers = require('../models/GroupMembers.js');
+
 router.use('/quiz', Quiz);
 
 /*
@@ -45,60 +49,51 @@ router.get('/allgroups', function(req, res, next) {
   });
 });
 
-
-//If someone wants to make this to work, go ahead. Supposed to get profiles in a group.
-router.get('/group/meminfo', function (req, res, next) {
-  //console.log("bajs bajs" + req.query.id);
-  Sequelize.query("SELECT * FROM student WHERE cid IN (SELECT student FROM groups WHERE id = :id AND course = :course)",
-      {model: Student}, {replacements: {id: req.query.id, course: req.query.course}}).then(function (students) {
-        res.json(students);
-
-
-      }).catch(function (err) {
-        res.status(500).send("Y u no werk");
-
-  });
+/*
+ Given a course (gencode), this route will return a list of all students in the course that are not yet part of any group.
+*/
+router.get('/ungrouped', function(req, res, next){
+  var loggedIn = isLoggedIn(req, res);
+  if(loggedIn){
+    console.log("Call to UngroupedStudents");
+    UngroupedStudents.findAll({
+      where: {
+        course: req.query.course
+      }
+    }).then(function(students) {
+      console.log("Response from UngroupedStudents");
+      res.json({result: "success", token:loggedIn.token, ungroupedStudents: students});
+    });
+  } else {
+    res.json({result: "failure", message: "User not logged in. Please log in if you wish to view the ungrouped students for course " + req.query.course});
+  }
 });
 
-router.get('/group', function(req, res, next) {
-  var students = [];
-  Group.findOne( {
-    where: {
-      id: parseInt(req.query.id),
-      course: req.query.course
-    }
-  }).then(function(group){
-    res.json(group);
-
-    //Tried to get the profiles for students, shit don't work yo.
-
-  /*  //through all students in the group, get them
-    var i = 0;
-    while(i < group.length){
-      console.log(group[i].dataValues.student);
-      Student.findOne({
-        where: {
-          cid: group[i].dataValues.student
-        }
-      }).then(function(student){
-        students[i] = student;
-        if(i === 0){
-          console.log("lolol");
-        }
-        console.log(i);
-        i++;
-        //console.log(students);
-
-      }).catch(function(err) {
-        res.status(500).send("donkey dong");
-      });
-    }
-      res.json(students);
+/*
+  Given a course (gencode) and a groupid (id), return all the members in that group.
+  Each entry for a member contains
+  - groupid (id)
+  - course
+  - cid
+  - firstname
+  - lastname
+  - email
+  - profile
 */
-    }).catch(function(err) {
-      res.status(500).send("something went wrong while getting members");
+router.get('/group', function (req, res, next) {
+  var loggedIn = isLoggedIn(req, res);
+  if(loggedIn) {
+    GroupMembers.findAll({
+      where: {
+        course: req.query.course,
+        id: req.query.group
+      }
+    }).then(function(members) {
+      res.json({result: "success", groupmembers: members});
     });
-  // have to look into how to make join querys. Worst case scenario we just write it out.
+  } else {
+    res.json({result: "failure", message: "User not logged in. Please log in if you wish to view the profiles of groupmembers"});
+  }
 });
 
 router.post('/register', function(req, res, next){
@@ -112,13 +107,15 @@ router.post('/register', function(req, res, next){
         RegisteredAt.findOne(
           {where:
             {student: decodedToken.user,
-             course: req.body.gencode}}).then(function(registered){
+             course: req.body.gencode}})
+        .then(function(registered){
           if(!registered){
             RegisteredAt.create(
               {student: decodedToken.user,
                course: req.body.gencode,
                score: 0
               });
+              message = "Successfully registered to course " + req.body.gencode;
           }else{
             console.log("User already registered to course");
             message = "Already registered to course";

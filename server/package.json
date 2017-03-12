@@ -3,19 +3,20 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"start": "node app.js"
+		"start": "node app.js",
+		"test": "mocha "
 	},
 	"dependencies": {
 		"body-parser": "~1.13.2",
 		"cookie-parser": "~1.3.5",
-    "express-force-ssl": "0.3.2",
-    "passport" : "~0.1.17",
-    "passport-local" : "~0.1.6",
+                "express-force-ssl": "0.3.2",
+                "passport" : "~0.1.17",
+                "passport-local" : "~0.1.6",
 		"passport-http" : "latest",
 		"rand-token" : "latest",
 		"jwt-simple" : "latest",
 		"debug": "~2.2.0",
-    "bcrypt-nodejs" : "latest",
+                "bcrypt-nodejs" : "latest",
 		"express": "~4.13.1",
 		"method-override": "^2.3.7",
 		"morgan": "~1.6.1",
@@ -23,5 +24,10 @@
 		"mysql": "^2.11.1",
 		"sequelize": "^3.23.3",
 		"express-session": "~1.15.1"
-	}
+	},
+        "devDependencies": {
+          "mocha": "^2.2.5",
+          "should": "^7.0.2",
+          "supertest": "^1.0.1"
+        }
 }

@@ -27,12 +27,7 @@ var app = express();
 app.use(cookieParser());
 
 //testing sessions
-app.use(session({
-  secret: "yolo",
-  resave: true,
-  saveUnitialized: true,
-  currentUser: ""
-}));
+app.use(session({secret: "yolo", resave: true, saveUnitialized: true, currentUser: ""}));
 
 app.use('/public', express.static(path.join(__dirname, '/public')));
 
@@ -45,10 +40,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.all('/*', function(req, res, next) {
-    res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT");
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization");
-    next();
+  res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization");
+  next();
 });
 
 //ROUTING SETUP
@@ -63,34 +58,32 @@ app.use('/quiz', quiz);
 
 
 app.listen(3000, function() {
-    console.log("Listening at port 3000");
+  console.log("Listening at port 3000");
 });
 
-
-
 app.use(function(err, req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
 // Exception handling
 if (app.get('env') === 'development') {
-    console.log("In development mode");
-    app.use(function(err, req, res, next) {
-        console.log("Error:" + err.stack);
-        res.status(err.status || 500);
+  console.log("In development mode");
+  app.use(function(err, req, res, next) {
+    console.log("Error:" + err.stack);
+    res.status(err.status || 500);
     /*    res.render('error', {
             message: err.message,
             error: err
         });*/
-    });
+  });
 } else {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-      /*  res.render('error', {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    /*  res.render('error', {
             message: err.message,
             error: {}
         });*/
-    });
+  });
 }

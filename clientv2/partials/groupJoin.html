@@ -5,6 +5,15 @@
     <button ng-click="loadGroupSelect()">Manually select or create group</button>
   </div>
   <div ng-show="tinderSelect">
+    <span class="label">Name:</span>
+    <span ng-bind="name"></span><br>
+    <span class="label">Profile:</span>
+    <span ng-bind="profile"></span><br>
+    <span class="label">Email:</span>
+    <span ng-bind="email"></span><br>
+    <button ng-click="prevSuitor()">Prev</button>
+    <button ng-click="sendInvite(cid)">Send group invite</button>
+    <button ng-click="nextSuitor()">Next</button>
   </div>
   <div ng-show="selectGroup">
     <div ng-repeat="group in groups">
@@ -14,8 +23,8 @@
       <div ng-repeat="member in group.members">
         <span class="clickable" ng-click="showProfile(member)">{{member}}</span><br>
       </div>
-      <button ng-click="joinGroup(group.number)">Join group</button>
+      <button ng-click="joinGroup(group.number)" ng-show="!isAdmin">Join group</button>
     </div>
-    <button ng-click="createGroup()">Create new group</button>
+    <button ng-click="createGroup()" ng-show="!isAdmin">Create new group</button>
   </div>
 </div>

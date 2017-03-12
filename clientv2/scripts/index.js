@@ -49,6 +49,8 @@
       $scope.isAdmin = false;
       sessionStorage.setItem("token", null);
       sessionStorage.setItem("cid", null);
+      setDisplayPartial("default");
+      setDefaultMessage("Welcome to ICE! Please log in or register.");
     }
     //Set functions for loading each page
     //The .js file for every view should have a loadPage($scope) function,
@@ -69,6 +71,12 @@
       }
     });
 
+    $.getScript('scripts/createCourse.js', function () {
+        $scope.loadCreateCourse = function () {
+            displayCreateCourse($scope);
+        }
+    })
+
     /*
       Load in the script registerCourse.js, and link the method loadRegisterCoursePage (which is defined in there),
       to the variable loadCourseReg. loadCourseReg() is the method being ran when a user clicks on Register course.
@@ -88,6 +96,12 @@
           sessionStorage.setItem("genCode", courseCode);
           displayCourseInfo($scope);
         }
+    });
+
+    $.getScript('scripts/groupJoin.js', function () {
+      $scope.loadGroups = function () {
+        displayGroupJoin($scope);
+      }
     })
 
     //loads the view for a students courses
@@ -105,6 +119,11 @@
       sessionStorage.setItem("desiredProfile", sessionStorage.getItem("cid")); //TODO: Hella ad-hoc solution, will do for now
       $scope.displayPartial = "profile";
     };
+
+    $scope.loadGroupManagement = function(){
+      console.log("Load groupManagement");
+      $scope.displayPartial = "groupManagement";
+    }
 
     console.log("'Bout to do session check stuff'");
     if(sessionStorage.getItem("cid")){
@@ -155,6 +174,14 @@
 
     console.log("HI HO");
   });
+
+  //controller for creating a course
+  mainApp.controller('createCourseCtrl', function ($scope, $http) {
+    //$scope.errorMsg = '';
+    $scope.submitCreateCourse = function(){
+      createCourse($http, $scope);
+    }
+  })
 
   mainApp.controller('loginCtrl', function($scope, $http) {
     console.log("Set submitLogin n shit");
@@ -251,6 +278,39 @@
         $scope.joinGroup = function(groupNo){
           joinGroup($scope, $http, sessionStorage.getItem("currentCourse"), groupNo);
         };
+        $scope.prevSuitor = function(){
+          prevSuitor($scope);
+        };
+        $scope.sendInvite = function(invitee){
+          sendInvite($scope, $http, invitee);
+        };
+        $scope.nextSuitor = function(){
+          nextSuitor($scope);
+        };
       }
+    });
+  });
+
+  mainApp.controller('groupManageCtrl', function($scope, $http){
+    $.getScript('scripts/groupManagement.js', function(){
+      $scope.acceptInvite = function(sender, course){
+        acceptInvite($scope, $http, course, sender);
+      };
+
+      $scope.leaveGroup = function(groupNo, course){
+        leaveGroup($scope, $http, groupNo, course);
+      };
+
+      $scope.loadGroupInvites = function(){
+        loadGroupInvites($scope, $http);
+      };
+
+      $scope.loadGroupList = function(){
+        loadGroupList($scope, $http);
+      };
+
+      $scope.showProfile = function(cid){
+        showProfile($scope, $http, cid);
+      };
     });
   });
