@@ -44,4 +44,25 @@ router.get('/', function(req, res) {
   }
 });
 
+/*
+  Given a student (cid) and a course (gencode), registers the student at the course.
+*/
+router.post('/join/course', function(req, res, next) {
+  try {
+    var loggedIn = isLoggedIn(req, res);
+  } catch(err) {
+    res.json({result: "failure, user not authenticated"});
+  }
+  if(loggedIn) {
+    RegisteredAt.build({
+      student: req.body.cid,
+      course: req.body.gencode
+    }).save().then(function() {
+      res.json({result: "success", token: loggedIn.token});
+    }).catch(function(err) {
+      res.sendStatus(500);
+    });
+  }
+});
+
 module.exports = router;
