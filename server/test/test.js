@@ -462,5 +462,56 @@ describe("test simple request", function() {
           done();
       });
     });
+    it("Create a course as admin", function(done) {
+      server
+      .post("/admin/createcourse")
+      .set("Authorization", authenticatedToken)
+      .send({gencode: 'qwe',
+         coursecode: 'DAT123',
+         name:'prog av databaser',
+         description: 'en kurs där man lär sig',
+          admin:'adamin'})
+      .expect("Content-type",/json/)
+      .expect(200)
+      .end(function(err, res) {
+        res.status.should.equal(200);
+        done();
+      });
+    });
+
+    it("Not able to reg a course with a gencode already in use", function(done) {
+      server
+      .post("/admin/createcourse")
+      .set("Authorization", authenticatedToken)
+      .send({gencode: 'abcdf',
+        coursecode: 'DAT123',
+        name:'prog av databaser',
+         description: 'en kurs där man lär sig',
+         admin:'adamin'})
+      .expect("Content-type",/json/)
+      .expect(500)
+      .end(function(err, res) {
+        res.status.should.equal(500);
+        //console.log(err);
+        done();
+      });
+    });
+
+
+    it("removes Course given existing gencode", function(done) {
+      server
+      .post("/admin/removecourse")
+      .set("Authorization", authenticatedToken)
+      .send({gencode: 'qwe'})
+      .expect("Content-type",/json/)
+      .expect(200)
+      .end(function(err, res) {
+        res.status.should.equal(200);
+        res.body.result.should.equal('success');
+        done();
+      });
+    });
+
+
 
 });
