@@ -357,8 +357,33 @@ describe("test simple request", function() {
         end(function(err, res) {
           res.status.should.equal(200);
           res.body.result.should.equal("success");
-          console.log(res.body);
           res.body.groupmembers.length.should.equal(0);
+          done();
+      });
+    });
+
+    it("Gets all groupsmembers registered at a course given gencode", function(done) {
+      server.
+        get("/course/allgroups?course=abcde").
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.length.should.not.equal(0);
+          done();
+      });
+    });
+
+    it("Returns no groupsmembers registered at a course given invalid gencode", function(done) {
+      server.
+        get("/course/allgroups?course=abasdasdcde").
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.length.should.equal(0);
           done();
       });
     });
