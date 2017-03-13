@@ -100,6 +100,21 @@
       $scope.displayPartial = "courses"
     };
 
+    $.getScript('scripts/admCourses.js', function () {
+        $scope.loadAdminCourseView = function () {
+            console.log("displaying admin courses");
+            displayAdminCourses($scope);
+        }
+    });
+
+    $.getScript('scripts/removeCourse.js', function () {
+        $scope.loadRemoveCourse = function () {
+            displayRemoveCourse($scope);
+        }
+    })
+
+
+
     $scope.loadQuizView = function(){
       $scope.displayPartial = "quiz"
     };
@@ -167,7 +182,27 @@
     $scope.submitCreateCourse = function(){
       createCourse($http, $scope);
     }
-  })
+  });
+
+  mainApp.controller('admCoursesCtrl', function ($scope, $http) {
+      //$scope.errorMsg = '';
+      console.log("admin course ctrl");
+      $.getScript("scripts/admCourses.js", function () {
+          loadAdminCourses($http, $scope);
+      });
+
+  });
+
+
+  mainApp.controller('removeCourseCtrl', function ($scope, $http) {
+      //$scope.errorMsg = '';
+      console.log("in removeCourseCtrl")
+      $.getScript("scripts/removeCourse.js",function () {
+          $scope.confirmRemoveCourse = function(){
+              confirmRemoveCourse($http, $scope);
+          }
+      });
+  });
 
   mainApp.controller('loginCtrl', function($scope, $http) {
     $scope.submitLogin = function() {

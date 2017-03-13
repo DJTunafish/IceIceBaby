@@ -1,3 +1,7 @@
+/*
+  Register a new user to the application by sending a POST
+  request to the server
+*/
   function regUser($http, $scope){
     console.log("Attempting to register new user");
     $.getScript('scripts/constants.js', function() {
@@ -24,8 +28,9 @@
     });
   }
 
+/*
+  Simple setter for the displayPartial variable
+*/
   function loadRegPage($scope, $http){
-    console.log("register loadpage");
     $scope.displayPartial = "register";
-    console.log("displayPartial set to register");
   }
