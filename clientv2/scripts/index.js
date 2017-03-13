@@ -146,7 +146,7 @@
             sessionStorage.setItem("token", response.data.token);
             $scope.loggedIn = true;
             $scope.defaultMsg = "Welcome, " + sessionStorage.getItem("cid");
-            if(response.data.isAdmin){
+            if(response.data.user.isAdmin){
               $scope.isAdmin = true;
             }
           }else{

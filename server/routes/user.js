@@ -26,10 +26,17 @@ router.get("/", function(req, res, next){
           cid: req.query.cid
         }
       }).then(function(admin){
-        var response = {result: "success", token: loggedIn.token,
-                        user: {cid: user.cid, email : user.email,
-                        firstname: user.firstname, lastname: user.lastname,
-                        isAdmin: (admin != null)}};
+        console.log("is an admin");
+        var response = {result: "success",
+            token: loggedIn.token,
+            user: {
+                cid: user.cid,
+                email : user.email,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                isAdmin: true
+                }
+            };
         var decodedToken = jwt.decode(loggedIn.token, constants.secret);
         if(decodedToken.user == req.query.cid){
           response.personnumber = user.personnumber;

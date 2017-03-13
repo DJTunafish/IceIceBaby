@@ -3,7 +3,7 @@
     <h3>Course information</h3>
     <span ng-bind="courseInfo"></span><br>
     <br>
-    <div class="courseButtons" ng-click="loadGroups()" ng-show="loggedIn">Groups</div>
+    <div class="courseButtons" ng-click="loadGroups()" ng-show="loggedIn && !isAdmin">Groups</div>
     <div class="courseButtons" ng-click="loadQuizView()" ng-show="loggedIn && !isAdmin">Quiz</div>
     <div class="courseButtons" ng-click="loadRemoveCourse()" ng-show="loggedIn && isAdmin">Remove Course</div>
 

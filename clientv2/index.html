@@ -13,10 +13,9 @@
   <a href="#" class="sideLink" ng-click="loadLogin()" ng-show="!loggedIn">Login</a>
   <a href="#" class="sideLink" ng-click="setLoggedOut()" ng-show="loggedIn">Log out</a>
   <a href="#" class = "sideLink" ng-click="loadRegister()" ng-show="!loggedIn">Register</a>
-  <a href="#" class = "sideLink" ng-click="loadProfile()" ng-show="loggedIn">Profile</a>
+  <a href="#" class = "sideLink" ng-click="loadProfile()" ng-show="loggedIn && !isAdmin">Profile</a>
   <a href="#" class = "sideLink" ng-click="loadStudentCourseView()" ng-show="loggedIn && !isAdmin">Courses</a>
   <a href="#" class = "sideLink" ng-click="loadAdminCourseView()" ng-show="loggedIn && isAdmin">Admin Courses</a>
-  <a href="#" class = "sideLink" ng-click="loadAdmin()" ng-show="loggedIn && isAdmin">Course admin</a>
   <a href="#" class = "sideLink" ng-click="loadGroupManagement()" ng-show="loggedIn && !isAdmin">Group management</a>
   <!-- These will set up the side nav-bar 'buttons' properly. A method is also declared, one that will run when it is clicked. -->
   <a href="#" class = "sideLink" ng-click="loadCourseReg()" ng-show="loggedIn && !isAdmin">Register course</a>
