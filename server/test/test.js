@@ -316,4 +316,75 @@ describe("test simple request", function() {
           done();
       });
     });
+
+    it("Authenticated user should to get all ungrouped students of a course", function(done) {
+      server.
+        get("/course/ungrouped?course=abcde").
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.result.should.equal("success");
+          res.body.ungroupedStudents.should.not.equal("undefined");
+          authenticatedToken = res.body.token;
+          done();
+      });
+    });
+
+    it("Authenticated user should NOT get any ungrouped students with a invalid coursecode", function(done) {
+      server.
+        get("/course/ungrouped?course=absdfsdfsdfdscde").
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.result.should.equal("success");
+          res.body.ungroupedStudents.length.should.equal(0);
+          authenticatedToken = res.body.token;
+          done();
+      });
+    });
+
+    it("Return no groupmembers with invalid id och course", function(done) {
+      server.
+        get("/course/group").
+        send({id:'1asdas', course:'abasdasdasddascde'}).
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.result.should.equal("success");
+          res.body.groupmembers.length.should.equal(0);
+          done();
+      });
+    });
+
+    it("Gets all groupsmembers registered at a course given gencode", function(done) {
+      server.
+        get("/course/allgroups?course=abcde").
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.length.should.not.equal(0);
+          done();
+      });
+    });
+
+    it("Returns no groupsmembers registered at a course given invalid gencode", function(done) {
+      server.
+        get("/course/allgroups?course=abasdasdcde").
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.length.should.equal(0);
+          done();
+      });
+    });
 });
