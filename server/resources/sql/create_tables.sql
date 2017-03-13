@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS Question (
   question VARCHAR(128),
   weight FLOAT UNSIGNED,
   course VARCHAR(5) REFERENCES Course(gencode),
-  PRIMARY KEY (question, answer, weight, course)
+  PRIMARY KEY (question, weight, course)
   );
 
 CREATE TABLE IF NOT EXISTS Groups (

@@ -4,6 +4,8 @@ var router = express.Router();
 var Admin = require('../models/Admin.js');
 var Student = require('../models/Student.js');
 var Course = require('../models/Course.js');
+var isLoggedIn = require('../auth/isLoggedIn.js');
+var constants = require("../resources/constants.js");
 
 //show admin page
 router.get('/', function(req, res, next) {
@@ -14,6 +16,24 @@ router.get('/', function(req, res, next) {
   }).then(function(admin) {
     res.json(admin);
   });
+});
+
+router.get('/courses', function(req, res, next) {
+    var loggedIn = isLoggedIn(req, res);
+    console.log("getting courses")
+    if(loggedIn) {
+      console.log("getting courses")
+        Course.findAll({
+            where: {
+                admin: req.query.cid
+            }
+        }).then(function (courses) {
+          console.log(courses)
+           res.json({result: "success", courses: courses, token: loggedIn.token});
+        }).catch(function (err) {
+            console.log("error when getting courses")
+        });
+    }
 });
 
 /*

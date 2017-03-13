@@ -1,0 +1,8 @@
+<div ng-controller="admCoursesCtrl">
+    <h3>Your admin courses</h3>
+    <ul ng-repeat="course in myAdminCourses">
+        <div class="courseButtons" ng-click="loadCourse(course.gencode)">
+            {{course.gencode}},  {{course.coursecode}}, {{course.name}}
+        </div>
+    </ul>
+</div>

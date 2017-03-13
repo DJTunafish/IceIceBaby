@@ -23,7 +23,11 @@ router.use('/quiz', Quiz);
   Given a course (gencode), return the course entry associated with it.
 */
 router.get('/', function(req, res, next) {
-  var loggedIn = isLoggedIn(req, res);
+  try {
+    var loggedIn = isLoggedIn(req, res);
+  } catch(err) {
+    res.json({result: "failure, user not authenticated"});
+  }
   if(loggedIn) {
       Course.findOne({
           where: {

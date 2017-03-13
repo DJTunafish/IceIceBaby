@@ -13,7 +13,7 @@ describe("Quiz test", function() {
     .expect("Content-type", /json/)
     .end(function(err, res) {
       res.status.should.equal(200);
-      res.body[0].question.should.equal('How tall is Robert?');
+      res.body[0].question.should.equal('How good would you say you are at defining BNF grammar on a scale from 1 to 10?');
       done();
     });
   });

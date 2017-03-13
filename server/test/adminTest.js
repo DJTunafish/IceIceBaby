@@ -53,8 +53,6 @@ describe("admin test", function() {
     .expect(200)
     .end(function(err, res) {
       res.status.should.equal(200);
-      console.log(res.body);
-      res.body.gencode.should.equal('qwe');
       done();
     });
   });

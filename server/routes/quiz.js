@@ -14,22 +14,22 @@ var RegisteredAt = require('../models/RegisteredAt.js');
 GIven course (gencode) and cid post the score to the database
 */
 router.post('/score', function(req, res, next) {
-  console.log('Input gencode: '+req.body.gencode);
-  console.log('Input cid: '+req.body.cid);
-  RegisteredAt.findOne({
-     where: {
-       course: req.body.gencode,
-       student: req.body.cid, /* This is still fucked, it only matches on the cid. TRY THIS IN SCHOOL TOMORROW */
-    }
-  }).then(function(old) {
-    console.log('New Score: '+ req.body.score);
-    console.log('Old score: '+ old.score);
-    old.update({
-      score: parseInt(req.body.score)
-    }).then(function() {
-        res.json({result: "success", data:old });
-    });
-  });
+  if(parseInt(req.body.score) >= 0 && parseInt(req.body.score) <= 100) {
+    RegisteredAt.findOne({
+      where: {
+        student: req.body.cid,
+        course: req.body.gencode
+      }
+    }).then(function(old) {
+      old.update({
+        score: parseInt(req.body.score)
+      }).then(function() {
+          res.json({result: "success", data:old });
+        });
+      });
+  } else {
+    res.json({result: "failure: score not within proper boundaries"});
+  }
 });
 
 /*

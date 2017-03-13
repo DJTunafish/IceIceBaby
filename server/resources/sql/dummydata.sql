@@ -23,18 +23,18 @@ VALUES
   ("abcde","DIT126", "webapp", "a course where you learn how to properly develop full-stack web applications.","adamin"),
   ("abcdf", "DIT231", "programming language technology", "A course where you use haskell <3", "adamin");
 
-INSERT INTO Question (question,answer, weight, course)
+INSERT INTO Question (question, weight, course)
 VALUES
-  ("How tall is Robert?", 1.0, "abcde"),
-  ("How tall is Erik?", 0.33, "abcdf"),
-  ("How tall is Aleksander?", 0.33, "abcdf"),
-  ("How tall is Adam?",  0.33, "abcdf");
+  ("How good would you say you are at defining BNF grammar on a scale from 1 to 10?", 1.0, "abcde"),
+  ("How good would you say you are at HTML/CSS on a scale from 1 to 10?", 0.33, "abcdf"),
+  ("How good would you say you are at PHP on a scale from 1 to 10?", 0.33, "abcdf"),
+  ("How good would you say you are at JavaScript on a scale from 1 to 10?", 0.33, "abcdf");
 
 INSERT INTO RegisteredAt (student, course, score)
 VALUES
-  ("krookr", "abcde", 100),
-  ("th4m", "abcde", 100),
-  ("alekaar", "abcdf", 100);
+  ("krookr", "abcde", 0),
+  ("th4m", "abcde", 0),
+  ("alekaar", "abcdf", 0);
 
 INSERT INTO Groups (id, course, student)
 VALUES

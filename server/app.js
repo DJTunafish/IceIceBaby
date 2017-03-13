@@ -61,8 +61,8 @@ app.listen(3000, function() {
   console.log("Listening at port 3000");
 });
 
-app.use(function(err, req, res, next) {
-  var err = new Error('Not Found');
+app.use(function(erro, req, res, next) {
+  var err = new Error('Not Found' + erro);
   err.status = 404;
   next(err);
 });
