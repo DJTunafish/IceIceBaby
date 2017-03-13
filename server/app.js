@@ -19,6 +19,7 @@ var register = require('./routes/register');
 var user = require('./routes/user');
 var quiz = require('./routes/quiz');
 
+
 var app = express();
 
 //VARIABLES FOR ROUTING FILES GO HERE
@@ -54,6 +55,7 @@ app.use('/login', login);
 app.use('/register', register);
 app.use('/user', user);
 app.use('/quiz', quiz);
+
 
 app.listen(3000, function() {
   console.log("Listening at port 3000");

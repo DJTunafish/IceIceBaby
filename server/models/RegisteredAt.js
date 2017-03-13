@@ -13,6 +13,7 @@ var RegisteredAt = sequelize.define('RegisteredAt', {
   },
   course: {
     type: Sequelize.STRING,
+      primaryKey: true,
     references: {
       model: Course,
       key: 'gencode'
