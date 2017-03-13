@@ -2,17 +2,17 @@
    <span ng-bind="errorMsg"></span>
    <form novalidate>
       First Name:<br>
-    <input id="fName" type="text"><br>
+    <input id="fName" type="text" placeholder="Jon" required><br>
       Last Name:<br>
-    <input id="lName" type="text"><br>
+    <input id="lName" type="text" placeholder="Hjort" required><br>
     Personnumber:<br>
-    <input id="personnumber" type="text"><br>
+    <input id="personnumber" type="text" placeholder="YYMMDDXXXX" required><br>
     CID:<br>
-    <input id="cid" type="text"><br>
+    <input id="cid" type="text" placeholder="Johjort" required><br>
     email:<br>
-    <input id="email" type="text"><br>
+    <input id="email" type="text" placeholder="jon@hjort.se" required><br>
     Password:<br>
-    <input id="password" type="password"><br>
+    <input id="password" type="password" placeholder="****" required><br>
     <br><br>
     <button ng-click="registerUser()">Submit</button>
   </form>

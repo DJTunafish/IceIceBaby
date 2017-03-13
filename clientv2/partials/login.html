@@ -3,9 +3,9 @@
    <span class="error" ng-bind="errorMsg"></span>
    <form novalidate>
     <span class="label">CID:</span><br>
-    <input id="cid" type="text"><br>
+    <input id="cid" type="text" required><br>
     <span class="label">Password:</span><br>
-    <input id="password" type="password">
+    <input id="password" type="password" required>
     <br><br>
     <button ng-click="submitLogin()">Submit</button>
   </form>
