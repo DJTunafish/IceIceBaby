@@ -1,0 +1,29 @@
+<div ng-controller="groupManageCtrl">
+  <span class="error" ng-bind="error"></span>
+  <div ng-show="!groupList && !groupInvites">
+    <button ng-click="loadGroupList()">Manage current groups</button>
+    <button ng-click="loadGroupInvites()">Check group invites</button>
+  </div>
+  <div ng-show="groupList">
+    <div ng-repeat="group in groups">
+      <span class="label">Group no: </span>
+      <span> {{group.id}}</span><br>
+      <span class="label">Course:</span>
+      <span> {{group.course}}</span><br>
+      <span class="label">Members:</span><br>
+      <div ng-repeat="member in group.members">
+        <span class="clickable" ng-click="showProfile(member.cid)">{{member.firstname}} {{member.lastname}}</span><br>
+      </div>
+      <button ng-click="leaveGroup(group.id, group.course)">Leave group</button>
+    </div>
+  </div>
+  <div ng-show="groupInvites">
+    <div ng-repeat="invite in invites">
+      <span class="label">From:</span>
+      <span class="clickable" ng-click="showProfile(invite.sender)">{{invite.sender}}</span><br>
+      <span class="label">Course:</span>
+      <span>{{invite.course}}</span><br>
+      <button ng-click="acceptInvite(invite.sender, invite.course)">Accept invite</button><br>
+    </div>
+  </div>
+</div>
