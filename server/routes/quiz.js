@@ -47,8 +47,3 @@ router.get('/questions', function(req, res, next) {
 });
 
 module.exports = router;
-
-/*
-sequelize.query("SELECT * FROM GroupMembers WHERE" + queryQualifiers +
-      " ORDER BY course DESC", { type: sequelize.QueryTypes.SELECT})
-  */

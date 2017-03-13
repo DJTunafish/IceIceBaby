@@ -1,4 +1,5 @@
 function acceptInvite($scope, $http, course, sender){
+  console.log("Accept invite");
   $http({
     method: 'PUT',
     url: serverURL + "/groups/invite",
@@ -7,6 +8,7 @@ function acceptInvite($scope, $http, course, sender){
     headers: {'Authorization': sessionStorage.getItem("token")}
   }).then(function(response){
     if(response.data.result == "success"){
+      console.log("Successfully accepted invite");
       sessionStorage.setItem("token", response.data.token);
       setDefaultMessage("Joined group with user " + sender + "!");
       setDisplayPartial("default");
@@ -19,6 +21,8 @@ function acceptInvite($scope, $http, course, sender){
 }
 
 function leaveGroup($scope, $http, groupNo, course){
+  console.log("User " + sessionStorage.getItem("cid") +
+              " leaving group " + groupNo + " in course " + course);
   $http({
     method: 'POST',
     url: serverURL + "/groups/leave",
@@ -28,6 +32,7 @@ function leaveGroup($scope, $http, groupNo, course){
     headers: {'Authorization': sessionStorage.getItem("token")}
   }).then(function(response){
     if(response.data.result == "success"){
+      console.log("Successfully left group");
       sessionStorage.setItem("token", response.data.token);
       setDefaultMessage("Successfully left group!");
       setDisplayPartial("default");
@@ -40,12 +45,14 @@ function leaveGroup($scope, $http, groupNo, course){
 }
 
 function loadGroupInvites($scope, $http){
+  console.log("Fetch group invites");
   $http({
     method: 'GET',
     url: serverURL + "/groups/invite",
     headers: {'Authorization': sessionStorage.getItem("token")}
   }).then(function(response){
     if(response.data.result == "success"){
+      console.log("Successfully fetched invites");
       sessionStorage.setItem("token", response.data.token);
       $scope.invites = response.data.invites;
       console.log(response.data.invites);
@@ -60,12 +67,14 @@ function loadGroupInvites($scope, $http){
 }
 
 function loadGroupList($scope, $http){
+  console.log("Fetch list of groups for user " + sessionStorage.getItem("cid"));
   $http({
     method: 'GET',
     url: serverURL + "/user/groups",
     headers: {'Authorization': sessionStorage.getItem("token")}
   }).then(function(response){
     if(response.data.result == "success"){
+      console.log("Successfully fetched list of groups");
       sessionStorage.setItem("token", response.data.token);
       $scope.groups = response.data.groups;
       console.log(response.data.groups);

@@ -8,9 +8,6 @@ var Question = sequelize.define('Question', {
     type: Sequelize.STRING,
     primaryKey: true
   },
-  answer: {
-    type: Sequelize.STRING,
-  },
   weight: {
     type: Sequelize.FLOAT
   },

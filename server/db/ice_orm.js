@@ -18,8 +18,9 @@ var Sequelize = require('sequelize');
     //storage: 'path/to/database.sqlite'
 });*/
 
-var sq = new Sequelize('ice', 'root', 'minare12', {
-    host: 'localhost',
+
+var sq = new Sequelize('astern', 'astern', 'srJiMob7', {
+    host: 'db.student.chalmers.se',
     dialect: 'mysql', //|'sqlite'|'postgres'|'mssql',
     pool: {
         max: 5,
