@@ -9,7 +9,7 @@
 
   <nav id="sideNav" style="width:15%">
   <br>
-  <img id="logo" src="img/Ice-logo.png">
+  <img id="logo" src="img/Ice-logo.png" onclick="playSound(this, 'resources/Ice Ice Baby (Only Ice Ice Baby).mp3');">
   <a href="#" class="sideLink" ng-click="loadLogin()" ng-show="!loggedIn">Login</a>
   <a href="#" class="sideLink" ng-click="setLoggedOut()" ng-show="loggedIn">Log out</a>
   <a href="#" class = "sideLink" ng-click="loadRegister()" ng-show="!loggedIn">Register</a>
@@ -69,3 +69,15 @@
 
 </body>
 </html>
+
+<script>
+    function playSound(elem, soundfile) {
+        if (elem.mp3) {
+            if(elem.mp3.paused) elem.mp3.play();
+            else elem.mp3.pause();
+        } else {
+            elem.mp3 = new Audio(soundfile);
+            elem.mp3.play();
+        }
+    }
+</script>

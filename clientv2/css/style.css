@@ -110,6 +110,7 @@ button{
 button:hover{
   background-color:#ccc;
   color:#000;
+  cursor: crosshair;
 }
 
 input[type=text], input[type=password] {
@@ -126,6 +127,6 @@ input:required:invalid {
   border: 1px solid red;
 }
 
-textarea:required:invalid{
-  border: 1px solid red;
+textarea:required:valid{
+  border: 1px solid green;
 }
