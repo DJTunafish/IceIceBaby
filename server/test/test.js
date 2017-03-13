@@ -387,4 +387,51 @@ describe("test simple request", function() {
           done();
       });
     });
+
+    it("Authenticated user should be able to join a course", function(done) {
+      server.
+        post("/course/register").
+        send({cid: "test", gencode: "abcde"}).
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.result.should.equal("success");
+          authenticatedToken = res.body.token;
+          done();
+      });
+    });
+
+    it("Authenticated user should NOT be able to join a course they have already joined", function(done) {
+      server.
+        post("/course/register").
+        send({cid: "test", gencode: "abcde"}).
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.result.should.equal("success");
+          res.body.message.should.equal("Already registered to course");
+          authenticatedToken = res.body.token;
+          done();
+      });
+    });
+
+    it("Authenticated user should NOT be able to join a course that doesnt exist", function(done) {
+      server.
+        post("/course/register").
+        send({cid: "test", gencode: "abasdasdsacde"}).
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.result.should.equal("success");
+          res.body.message.should.equal("No such course exists");
+          authenticatedToken = res.body.token;
+          done();
+      });
+    });
 });
