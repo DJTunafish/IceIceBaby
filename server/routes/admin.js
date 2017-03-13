@@ -5,12 +5,6 @@ var Admin = require('../models/Admin.js');
 var Student = require('../models/Student.js');
 var Course = require('../models/Course.js');
 
-
-//test
-router.get('/test', function(req, res, next){
-  res.json({text: "lollolollolol"});
-});
-
 //show admin page
 router.get('/', function(req, res, next) {
   Admin.findOne({
@@ -36,7 +30,6 @@ router.post('/createcourse', function(req, res, next){
   }).save().then(function() {
       res.json({result: "success"});
   }).catch(function(err) {
-    console.log("Skit")
     res.status(500).send((err + "\n"));
   });
 });

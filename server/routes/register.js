@@ -6,7 +6,6 @@ var User    = require('../models/User.js');
 var Student = require('../models/Student.js');
 
 router.post('/', function(req, res) {
-  console.log("Request for: " + req.body.cid + " with personnumber " + req.body.personnumber);
   User.findAll({
     where: {
       cid: req.body.cid

@@ -1,7 +1,4 @@
 
-//TODO: Ändra profile.html så att du kan sätta en variabel
-//      för att visa olika saker beroende på om man kollar på sin egen
-//      profil eller ej
 function updateProfile($scope, $http){
   $scope.updateProfile = true;
 }
@@ -32,8 +29,6 @@ function submitProfile($scope, $http){
 }
 
 function setInitialProfileValues($scope, studentResponse, userResponse, coursesResponse, cid){
-  console.log("'Bout to set some values, boss'");
-  console.log("given cid: " + userResponse.data.user.cid);
   $scope.ownProfile = cid == sessionStorage.getItem("cid");
   $scope.updateProfile = false;
   $scope.name = userResponse.data.user.firstname + " " + userResponse.data.user.lastname;

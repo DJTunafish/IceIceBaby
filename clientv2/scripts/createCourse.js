@@ -1,9 +1,8 @@
 
 //Create a course
 function createCourse($http, $scope){
-    console.log($("#gencode").val());
     $.getScript('scripts/constants.js', function() {
-        console.log("in createCourse");
+        console.log("Attempting to create course");
         $http({
             method: 'POST',
             url: serverURL + "/admin/createcourse",
@@ -13,10 +12,9 @@ function createCourse($http, $scope){
                 description: $("#cDesc").val(),
                 admin: sessionStorage.getItem("cid")}
         }).then(function successCallback(response) {
-            console.log("Result: " + response.data.result);
             if(response.data.result == "success"){
                 setDisplayPartial("default");
-                setDefaultMessage("Successfully create course!");
+                setDefaultMessage("Successfully created course!");
             }else{
                 $scope.errorMsg = "Failed to create new course. Course already exists"
             }

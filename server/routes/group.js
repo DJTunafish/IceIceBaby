@@ -41,9 +41,7 @@ router.get('/', function(req, res, next) {
 
 /*
   Given a student (cid), course (gencode) and a group-id (id), enlists a student in a group.
-  Returns 200 if successful, else 500.
-<<<<<<< HEAD
-*/ //TODO: Check that user isn't already member of group in given course
+  Returns 200 if successful, else 500.*/
    //TODO: Delete group invites for user joining group?
 
 router.post('/join', function(req, res, next) {
@@ -96,28 +94,18 @@ router.post('/join', function(req, res, next) {
   }
 });
 
-/*
-  Should this be here? I think it should be somewhere in /course/group/members or possible /student/course/group/members
-*/
-router.get('/members', function(req, res, next) {
-  // have to look into how to make join querys. Worst case scenario we just write it out.
-});
-
 router.get('/invite', function(req, res, next){
-  console.log("THE DANK");
   var loggedIn = isLoggedIn(req, res);
-  console.log("THE STANK");
   if(loggedIn){
-    console.log("Got into if-case");
     var decodedToken = jwt.decode(loggedIn.token, constants.secret);
     GroupInvite.findAll({where:{
       receiver: decodedToken.user
     }}).then(function(invites){
-      console.log("Call to groupinvite returned; " + invites);
       res.json({result: 'success', invites: invites, token:loggedIn.token});
     });
   }
 });
+
 /*
   Given a student (cid), course (gencode) and a group-id (id), de-lists a student from a group.
   Returns 200 upon successful de-listment, otherwise 500.
@@ -164,7 +152,6 @@ router.post('/invite', function(req, res, next){
 });
 
 router.put('/invite', function(req, res, next){
-  console.log("PUT DA INVITE ON DE LEFT HAND SIDE");
   var loggedIn = isLoggedIn(req, res);
   if(loggedIn){
     var decodedToken = jwt.decode(loggedIn.token, constants.secret);

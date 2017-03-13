@@ -7,7 +7,7 @@ function setCourses($scope, reggedCourses){
 
 //get all of a students regged courses
 function loadStudCourses($scope, $http){
-    console.log("LOLOLOLOL");
+    console.log("Load registered courses");
     $.getScript('scripts/constants.js', function() {
 
         $http({
