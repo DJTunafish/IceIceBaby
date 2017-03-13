@@ -331,7 +331,7 @@ describe("test simple request", function() {
           done();
       });
     });
-    
+
     it("Authenticated user should NOT get any ungrouped students with a invalid coursecode", function(done) {
       server.
         get("/course/ungrouped?course=absdfsdfsdfdscde").
@@ -343,6 +343,22 @@ describe("test simple request", function() {
           res.body.result.should.equal("success");
           res.body.ungroupedStudents.length.should.equal(0);
           authenticatedToken = res.body.token;
+          done();
+      });
+    });
+
+    it("Return no groupmembers with invalid id och course", function(done) {
+      server.
+        get("/course/group").
+        send({id:'1asdas', course:'abasdasdasddascde'}).
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.result.should.equal("success");
+          console.log(res.body);
+          res.body.groupmembers.length.should.equal(0);
           done();
       });
     });
