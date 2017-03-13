@@ -13,7 +13,8 @@ describe("Quiz test", function() {
     .expect("Content-type", /json/)
     .end(function(err, res) {
       res.status.should.equal(200);
-      res.body[0].question.should.equal('How good would you say you are at defining BNF grammar on a scale from 1 to 10?');
+      res.body.result.should.equal("success");
+      res.body.questions.length.should.not.equal(0);
       done();
     });
   });
@@ -24,9 +25,49 @@ describe("Quiz test", function() {
     .expect("Content-type", /json/)
     .end(function(err, res) {
       res.status.should.equal(200);
-      res.body.length.should.equal(0);
+      res.body.questions.length.should.equal(0);
       done();
     });
+  });
+
+  it('Correctly post score for a user', function(done) {
+   var random = Math.floor(Math.random() * 100) + 1 ;
+   server
+     .post("/score")
+     .send({cid: "krookr", gencode: "abcde", score:random})
+     .expect("Content-type", /json/)
+     .expect(200)
+     .end(function(err, res) {
+       res.status.should.equal(200);
+       res.body.result.should.equal("success");
+       done();
+   });
+ });
+
+  it('Return Error when trying to post score over 100', function(done) {
+    server
+      .post("/score")
+      .send({cid: "krookr", gencode: "abcde", score:110})
+      .expect("Content-type", /json/)
+      .expect(200)
+      .end(function(err, res) {
+        res.status.should.equal(200);
+        res.body.result.should.equal("failure: score not within proper boundaries");
+        done();
+    });
+  });
+
+  it('Return Error when trying to post score under 100', function(done) {
+   server
+     .post("/score")
+     .send({cid: "krookr", gencode: "abcde", score:-10})
+     .expect("Content-type", /json/)
+     .expect(200)
+     .end(function(err, res) {
+       res.status.should.equal(200);
+       res.body.result.should.equal("failure: score not within proper boundaries");
+       done();
+   });
   });
 
 });
