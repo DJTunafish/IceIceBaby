@@ -79,8 +79,6 @@ router.get('/groups', function(req, res, next){
         queryQualifiers = queryQualifiers + " (id=" + studentGroups[i].id +
         " AND course=\'" + studentGroups[i].course + "\' )";
       }
-      console.log("SELECT * FROM GroupMembers WHERE" + queryQualifiers +
-      " ORDER BY course DESC");
       sequelize.query("SELECT * FROM GroupMembers WHERE" + queryQualifiers +
       " ORDER BY course DESC", { type: sequelize.QueryTypes.SELECT})
       .then(function(members) {
@@ -106,7 +104,6 @@ router.get('/groups', function(req, res, next){
             });
           }
         }
-        console.log("GROUPS " + groups);
         res.json({result: "success", token: loggedIn.token, groups: groups});
       });
     });
@@ -115,7 +112,6 @@ router.get('/groups', function(req, res, next){
 
 router.post("/", function(req, res, next){
   var loggedIn = isLoggedIn(req, res);
-  console.log("GOT THROUGH ISLOGGEDIN");
   if(loggedIn){
     var decodedToken = jwt.decode(loggedIn.token, constants.secret);
     var nPass;
@@ -124,27 +120,16 @@ router.post("/", function(req, res, next){
 
     Student.findOne({where: {cid: decodedToken.user}}).then(function(oldStudent){
       User.findOne({where: {cid: decodedToken.user}}).then(function(oldUser){
-          console.log("FOUND STUDENT AND USER");
-
           if(req.body.email != ""){
-            console.log("EMAIL NON-EMPTY");
             nEmail = req.body.email;
           }else{
-            console.log("EMAIL EMPTY");
-            console.log(oldUser);
-            console.log(oldUser.email);
             nEmail = oldUser.email;
           }
-          console.log("EMAIL");
-
           if(req.body.profile != ""){
-            console.log("RECEIVED PROFILE: " + req.body.profile);
             nProf = req.body.profile;
           }else{
-            console.log("OLD PROFILE: " + oldStudent.profile);
             nProf = oldStudent.profile;
           }
-          console.log("PROFILE");
 
           if(req.body.password != ""){
             nPass = bcrypt.hashSync(decodedToken.user + req.body.password, bcrypt.genSaltSync(8), null);
@@ -152,16 +137,9 @@ router.post("/", function(req, res, next){
             nPass = oldUser.password;
           }
 
-          console.log("PASSWORD");
-
-
-          console.log("ABOUT TO UPDATE");
           oldStudent.update({profile: nProf});
-    //      Student.update({profile: nProf}, {where: {cid: decodedToken.user}});
-          console.log("UPDATED STUDENT. NEW PROF: " + nProf);
           oldUser.update({password: nPass, email: nEmail});
-//          User.update({password: nPass, email: nEmail}, {where: {cid: decodedToken.user}});
-          console.log("UPDATED USER. New email: " + nEmail);
+
           res.json({result: "success", token: loggedIn.token});
       });
     });

@@ -6,26 +6,13 @@
   var setLoggedOut;
   var getGScope;
 
-  function testPrint(){
-    console.log("HOWDY");
-  }
-
   var mainApp = angular.module('myApp', []);
 
-/*  mainApp.config([
-    "$httpProvider",
-    function($httpProvider){
-        $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
-    }
-  ]);*/
-
-  //TODO: Check if token & cid already in sessionStorage
   mainApp.controller('myCtrl', function($scope, $http) {
-    console.log("myCtrl");
-    console.log(sessionStorage.getItem("token"));
     getGScope = function(){
       return $scope;
     };
+
     //Set environment variables
     setDisplayPartial = function(partialToDisplay){
       $scope.displayPartial = partialToDisplay;
@@ -44,7 +31,6 @@
     }
 
     setLoggedOut = function() {
-      console.log("setLoggedOut");
       $scope.loggedIn = false;
       $scope.isAdmin = false;
       sessionStorage.setItem("token", null);
@@ -52,6 +38,7 @@
       setDisplayPartial("default");
       setDefaultMessage("Welcome to ICE! Please log in or register.");
     }
+
     //Set functions for loading each page
     //The .js file for every view should have a loadPage($scope) function,
     //which is used in the sidenav to load the partial.
@@ -65,6 +52,7 @@
         loadLogPage($scope);
       };
     });
+
     $.getScript('scripts/register.js', function() {
       $scope.loadRegister = function(){
         loadRegPage($scope);
@@ -78,8 +66,11 @@
     })
 
     /*
-      Load in the script registerCourse.js, and link the method loadRegisterCoursePage (which is defined in there),
-      to the variable loadCourseReg. loadCourseReg() is the method being ran when a user clicks on Register course.
+      Load in the script registerCourse.js, and link the method
+      loadRegisterCoursePage (which is defined in there),
+      to the variable loadCourseReg.
+      loadCourseReg() is the method being ran when a user clicks
+      on Register course.
     */
     $.getScript('scripts/registerCourse.js', function() {
       $scope.loadCourseReg = function(){
@@ -115,19 +106,17 @@
 
     /*$.getScript('scripts/profile.js', function() {*/
     $scope.loadProfile = function(){
-      console.log("Run loadProfile");
       sessionStorage.setItem("desiredProfile", sessionStorage.getItem("cid")); //TODO: Hella ad-hoc solution, will do for now
       $scope.displayPartial = "profile";
     };
 
     $scope.loadGroupManagement = function(){
-      console.log("Load groupManagement");
       $scope.displayPartial = "groupManagement";
     }
 
-    console.log("'Bout to do session check stuff'");
+    console.log("Check for authentication information in session");
     if(sessionStorage.getItem("cid")){
-      console.log("Session data found");
+      console.log("Authentication data found, attempting authentication");
       $.getScript('scripts/constants.js', function(){
         $http({
           method: 'GET',
@@ -136,7 +125,7 @@
           headers: {'Authorization': sessionStorage.getItem("token")}
         }).then(function(response){
           if(response.data.result == "success"){
-            console.log("Verification successful");
+            console.log("Authentication successful");
             sessionStorage.setItem("token", response.data.token);
             $scope.loggedIn = true;
             $scope.defaultMsg = "Welcome, " + sessionStorage.getItem("cid");
@@ -144,7 +133,7 @@
               $scope.isAdmin = true;
             }
           }else{
-            console.log("Verification failed");
+            console.log("Authentication failed, deleting auth data from session");
             sessionStorage.setItem("cid", null);
             sessionStorage.setItem("token", null);
             $scope.defaultMsg = "Welcome to Ice!"
@@ -171,20 +160,16 @@
     $scope.registerUser = function() {
         regUser($http, $scope);
     };
-
-    console.log("HI HO");
   });
 
   //controller for creating a course
   mainApp.controller('createCourseCtrl', function ($scope, $http) {
-    //$scope.errorMsg = '';
     $scope.submitCreateCourse = function(){
       createCourse($http, $scope);
     }
   })
 
   mainApp.controller('loginCtrl', function($scope, $http) {
-    console.log("Set submitLogin n shit");
     $scope.submitLogin = function() {
       logIn($http, $scope);
     };
@@ -195,8 +180,6 @@
     main purpose is to link methods to any eventual buttons and other action-able items in the partial.
   */
   mainApp.controller('registerCourseCtrl', function($scope, $http) {
-    console.log("About to register to a course");
-    //$scope.displayPartial = "registerCourse";
     $scope.registerCourse = function () {
       registerToCourse($http, $scope);
     };
@@ -204,7 +187,6 @@
 
   //courseCtrl to load a students courses
   mainApp.controller('coursesCtrl', function ($scope, $http) {
-    console.log("Try to get courses");
     $.getScript('scripts/courses.js', function () {
       loadStudCourses($scope, $http);
     });
@@ -214,14 +196,12 @@
     Controller for a course, links loadCourseInfo til the courseCtrl html code
    */
   mainApp.controller('courseCtrl', function ($scope, $http) {
-     console.log("Try getting a course");
      $.getScript('scripts/course.js', function () {
              loadCourseInfo($scope, $http);
      });
   });
 
   mainApp.controller('quizCtrl', function ($scope, $http) {
-     console.log("Try getting a quiz");
      $.getScript('scripts/quiz.js', function () {
              loadQuiz($scope, $http);
      });
@@ -231,7 +211,6 @@
   });
 
   mainApp.controller('profileCtrl', function($scope, $http){
-    console.log("Run profileCtrl");
     $.getScript('scripts/profile.js', function() {
       $scope.updateProfileView = function(){
         updateProfile($scope, $http);
@@ -242,18 +221,6 @@
       loadProfPage($scope, $http, sessionStorage.getItem("desiredProfile"));
     });
   });
-
-  mainApp.controller('defCtrl', function($scope, $http){
-/*    if(getGScope().loggedIn){
-      console.log("Set loadProfile");
-      getGScope().loadProfile = function(){
-        console.log("Set displayPartial to profile");
-        setDisplayPartial("profile");
-      };
-    }
-    console.log(getGScope().loadProfile);*/
-  });
-
 
   mainApp.controller('groupJoinCtrl', function($scope, $http){
     $.getScript('scripts/groupJoin.js', function(){

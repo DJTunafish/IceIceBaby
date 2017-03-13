@@ -1,8 +1,6 @@
 
 function loadQuiz($scope, $http){
-    console.log("QUIZ QUIZ");
     $.getScript('scripts/constants.js', function() {
-
         $http({
         method: 'GET',
         url: serverURL + "/quiz/questions",
@@ -10,7 +8,6 @@ function loadQuiz($scope, $http){
         headers: {'Authorization': sessionStorage.getItem("token")}
         }).then(function(response) {
             if (response.data.result == "success") {
-                console.log("Get /quiz/questions success");
                 sessionStorage.setItem("token", response.data.token);
                 $scope.myQuizQuestions = response.data.questions;
             } else {
@@ -33,12 +30,8 @@ function submitQuizAnswers($scope, $http){
     totalScore+= (userAnswers[i]*$scope.myQuizQuestions[i].weight)
   }
 
-//Multiplie the score by ten because the sum of questionScores * questionWeight can be maximun 10 and score in databases is from 0-100
+//Multiply the score by ten because the sum of questionScores * questionWeight can be maximun 10 and score in databases is from 0-100
   totalScore*=10;
-  console.log('Din poäng är: ' + totalScore);
-
-  //Här ska vi köra en post men oklart om det fungerar just nu
-  console.log('Gencode i sessionstorage är : '+sessionStorage.getItem("genCode"));
   $.getScript('scripts/constants.js', function() {
     $http({
       method: 'POST',
@@ -52,7 +45,7 @@ function submitQuizAnswers($scope, $http){
         sessionStorage.setItem("token", response.data.token);
       } else {
         console.log('Auth Fail');
-        //authenticationFailure(response.data);
+        authenticationFailure(response.data);
       }
     });
   })

@@ -6,12 +6,10 @@ var randtoken = require('rand-token');
 
 
 passport.serializeUser(function(user, done) { //TODO
-  console.log("AUTH: serializeUser");
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) { //TODO
-  console.log("AUTH: deserializeUser");
   User.find({where: {id: id}}).success(function(user){
     done(null, user);
   }).error(function(err){
@@ -49,16 +47,15 @@ passport.use('login', new LocalStrategy({
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
   function(req, cid, password, done) {
-    console.log("Login auth strategy");
     User.findOne({ where: { cid : cid }}).then(function(user) {
       if (!user) {
         done(null, false, { message: 'Unknown user' });
-        console.log("USER DOES NOT EXIST");
+        console.log("User does not exist");
       } else if (!(bcrypt.compareSync(cid + password, user.password))) {
         done(null, false, { message: 'Invalid password'});
-        console.log("PASSWORD INCORRECT");
+        console.log("Password incorrect");
       } else {
-        console.log("EVERYTHING FINE");
+        console.log("Everything fine");
         done(null, cid);
       }
     }).error(function(err){
@@ -66,31 +63,5 @@ passport.use('login', new LocalStrategy({
     });
   }
 ));
-
-passport.use('verifyToken', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
-        usernameField : 'cid',
-        passwordField : 'token',
-        passReqToCallback : true // allows us to pass back the entire request to the callback
-    }, function(req, cid, token, done){
-      //TODO: Remember to update expiration time of token if it exists
-      AuthToken.findOne({where: {user: cid}}).then(function(authtok){
-        console.log("verifytoken");
-        if(!authtok){
-          done(null, false, {message: 'Not logged in'});
-        }else if(!(bcrypt.compareSync(token, authtok.token))){ //If given token doesn't match
-          done(null, false, {message: 'Token does not match'});
-        }else if((new Date()) > authtok.expires){ //If token is expired
-          done(null, false, {message: 'Login timed out'});
-        }else{ // Everything's fine, update expiration time
-          authtok.update({expires : new Date(new Date().getTime() + 15*60000)})
-          .then(function(){
-            done(null, cid);
-          });
-        }
-      });
-
-    }));
-
 
 module.exports = passport;

@@ -6,6 +6,7 @@ var suitorIndex;
 function loadTinderSelect($scope, $http, course){
  //TODO: handle case where there are no other ungrouped students
   $.getScript('scripts/constants.js', function() {
+    console.log("Load matchmaking view");
     $http({
       method: 'GET',
       url: serverURL + "/course/ungrouped",
@@ -13,6 +14,7 @@ function loadTinderSelect($scope, $http, course){
       headers: {'Authorization': sessionStorage.getItem("token")}
     }).then(function(response){
       if(response.data.result == "success"){
+        console.log("Successfully loaded matchmaking view");
         sessionStorage.setItem("token", response.data.token);
         var user = response.data.ungroupedStudents.find(function(s){
           return s.cid == sessionStorage.getItem("cid");
@@ -30,12 +32,14 @@ function loadTinderSelect($scope, $http, course){
           $scope.selectGroup = false;
           updateSuitor($scope);
         }else{
+          console.log("User already in group");
           setDefaultMessage("Please exit current group before entering new group");
           setDisplayPartial("default");
         }
       }
     }).catch(function(error){
       //TODO
+      console.log("Failed to reach server");
     });
   });
 }
@@ -55,7 +59,8 @@ function prevSuitor($scope){
 }
 
 function sendInvite($scope, $http, invitee){
-  console.log("sendInvite");
+  console.log("Sending group invite from " + sessionStorage.getItem("cid") + "to " +
+               ivitee);
   $.getScript('scripts/constants.js', function() {
     $http({
       method: 'POST',
@@ -65,6 +70,7 @@ function sendInvite($scope, $http, invitee){
       headers: {'Authorization': sessionStorage.getItem("token")}
     }).then(function(response){
       if(response.data.result == "success"){
+        console.log("Successfully sent invite");
         sessionStorage.setItem("token", response.data.token);
         setDefaultMessage(response.data.message);
         setDisplayPartial("default");
@@ -72,7 +78,7 @@ function sendInvite($scope, $http, invitee){
         authenticationFailure(response.data);
       }
     }).catch(function(error){
-
+      console.log("Error in contacting server: " + error);
     });
   });
 }
@@ -90,6 +96,7 @@ function displayGroupJoin($scope) {
 
 function loadGroupSelect($scope, $http, course){
   $.getScript('scripts/constants.js', function() {
+    console.log("Load group selection view");
     $http({
       method: 'GET',
       url: serverURL + "/groups",
@@ -97,6 +104,7 @@ function loadGroupSelect($scope, $http, course){
       headers: {'Authorization': sessionStorage.getItem("token")}
     }).then(function(response){
       if(response.data.result == "success"){
+        console.log("Successfully fetched data from server");
         sessionStorage.setItem("token", response.data.token);
         var groups = new Array();
         for(let i = 0; i < response.data.groups.length;i++){
@@ -115,7 +123,7 @@ function loadGroupSelect($scope, $http, course){
 }
 
 function createGroup($scope, $http, course){
-  console.log("createGroup");
+  console.log("Create new group");
   $.getScript('scripts/constants.js', function() {
     $http({
       method: 'POST',
@@ -125,10 +133,12 @@ function createGroup($scope, $http, course){
       headers: {'Authorization': sessionStorage.getItem("token")}
     }).then(function(response){
       if(response.data.result == "success"){
+        console.log("Successfully created group");
         sessionStorage.setItem("token", response.data.token);
         setDefaultMessage("Successfully created group!");
         setDisplayPartial("default");
       }else{
+        console.log("Failure");
         authenticationFailure(response.data);
       }
     });
@@ -136,13 +146,13 @@ function createGroup($scope, $http, course){
 }
 
 function showProfile($scope, $http, course, cid){
- //TODO: Temp fix
   sessionStorage.setItem("desiredProfile", cid);
   setDisplayPartial("profile");
 }
 
 function joinGroup($scope, $http, course, groupNo){
-  console.log("joinGroup: " + groupNo);
+  console.log("User " + sessionStorage.getItem("cid") +
+              " joining group "  + groupNo + " in course " + course);
   $.getScript('scripts/constants.js', function() {
     $http({
       method: 'POST',
@@ -153,6 +163,7 @@ function joinGroup($scope, $http, course, groupNo){
       headers: {'Authorization': sessionStorage.getItem("token")}
     }).then(function(response){
       if(response.data.result == "success"){
+        console.log("Successfully joined group");
         sessionStorage.setItem("token", response.data.token);
         setDefaultMessage("Successfully joined group " + groupNo + "!");
         setDisplayPartial("default");
@@ -160,6 +171,7 @@ function joinGroup($scope, $http, course, groupNo){
         authenticationFailure(response.data);
       }
     }).catch(function(error){
+      console.log("Error in contacting server");
       setDefaultMessage(error);
       setDisplayPartial("default");
     });

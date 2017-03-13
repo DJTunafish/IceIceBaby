@@ -1,5 +1,5 @@
-  function regUser($http, $scope){ //TODO: Check everything non-empty and shite
-    console.log($("#personnumber").val());
+  function regUser($http, $scope){
+    console.log("Attempting to register new user");
     $.getScript('scripts/constants.js', function() {
       $http({
         method: 'POST',
@@ -11,12 +11,10 @@
                password: $("#password").val(),
                email: $("#email").val()}
         }).then(function successCallback(response) {
-            console.log("Result: " + response.data.result);
+            console.log("Register result: " + response.data.result);
             if(response.data.result == "success"){
-   //           $.getScript('scripts/index.js', function(){
-                setDisplayPartial("default");
                 setDefaultMessage("Successfully registered user!");
-     //         });
+                setDisplayPartial("default");
             }else{
               $scope.errorMsg = "Failed to register new user. User already exists"
             }
@@ -26,7 +24,6 @@
     });
   }
 
-  //loadPage should contain logic to check whether loading the
   function loadRegPage($scope, $http){
     console.log("register loadpage");
     $scope.displayPartial = "register";

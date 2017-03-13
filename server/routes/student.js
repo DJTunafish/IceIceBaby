@@ -24,8 +24,9 @@ router.get('/groups', function(req, res, next) {
 */
 router.get('/', function(req, res) {
   /*
-    Need for try catch here stems from the fact that isLoggedIn will throw an exception if the user is not logged in.
-    We wish to report back to the client, not have them timeout.
+    Need for try catch here stems from the fact that isLoggedIn will throw an
+    exception if the user is not logged in. We wish to report back to the client,
+     not have them timeout.
   */
     try {
       var loggedIn = isLoggedIn(req, res);
@@ -41,7 +42,6 @@ router.get('/', function(req, res) {
         res.json({result: "success", student: student, token: loggedIn.token});
       });
   }
-  //});
 });
 
 /*
@@ -54,7 +54,6 @@ router.post('/join/course', function(req, res, next) {
     res.json({result: "failure, user not authenticated"});
   }
   if(loggedIn) {
-    console.log(req.body);
     RegisteredAt.build({
       student: req.body.cid,
       course: req.body.gencode

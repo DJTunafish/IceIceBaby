@@ -1,6 +1,6 @@
 
 function loadCourseInfo($scope, $http) {
-    console.log("loading a course " + sessionStorage.getItem("genCode"));
+    console.log("loading course " + sessionStorage.getItem("genCode"));
     $.getScript('scripts/constants.js', function () {
         $http({
             method: 'GET',
