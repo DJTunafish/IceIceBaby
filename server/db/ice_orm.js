@@ -18,7 +18,7 @@ var Sequelize = require('sequelize');
     //storage: 'path/to/database.sqlite'
 });*/
 
-var sq = new Sequelize('iceice', 'root', '', {
+var sq = new Sequelize('ice', 'root', 'minare12', {
     host: 'localhost',
     dialect: 'mysql', //|'sqlite'|'postgres'|'mssql',
     pool: {
@@ -30,5 +30,6 @@ var sq = new Sequelize('iceice', 'root', '', {
     // SQLite only
     //storage: 'path/to/database.sqlite'
 });
+
 
 module.exports = sq;
