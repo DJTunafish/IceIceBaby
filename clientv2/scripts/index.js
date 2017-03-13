@@ -109,6 +109,10 @@
       $scope.displayPartial = "courses"
     };
 
+    $scope.loadQuizView = function(){
+      $scope.displayPartial = "quiz"
+    };
+
     /*$.getScript('scripts/profile.js', function() {*/
     $scope.loadProfile = function(){
       console.log("Run loadProfile");
@@ -214,6 +218,16 @@
      $.getScript('scripts/course.js', function () {
              loadCourseInfo($scope, $http);
      });
+  });
+
+  mainApp.controller('quizCtrl', function ($scope, $http) {
+     console.log("Try getting a quiz");
+     $.getScript('scripts/quiz.js', function () {
+             loadQuiz($scope, $http);
+     });
+     $scope.submitQuizAnswers = function(){
+       submitQuizAnswers($scope, $http);
+     };
   });
 
   mainApp.controller('profileCtrl', function($scope, $http){

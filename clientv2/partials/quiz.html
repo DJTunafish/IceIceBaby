@@ -1,0 +1,16 @@
+<div ng-controller="quizCtrl">
+    <h3>Your Quiz </h3>
+    <h4>Svara på frågorna. 10 är högsta, 1 är lägsta</h4>
+    <ul ng-repeat="questions in myQuizQuestions">
+        <div >
+           {{questions.question}}
+          <br>
+          <form>
+        		<input type="range" class="quizAnswer" name="amountRange" min="0" max="10" value="5" oninput="this.form.amountInput.value=this.value" />
+        		<input type="number" name="amountInput" min="0" max="10" value="5" oninput="this.form.amountRange.value=this.value" />
+        	</form>
+        </div>
+    </ul>
+    <button ng-click="submitQuizAnswers()">Submit answers</button>
+
+</div>
