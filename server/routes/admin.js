@@ -41,31 +41,37 @@ router.get('/courses', function(req, res, next) {
   associates that admin with the course.
 */
 router.post('/createcourse', function(req, res, next){
-  Course.build({
-    gencode: req.body.gencode,
-    coursecode: req.body.coursecode,
-    name: req.body.name,
-    description: req.body.description,
-    admin: req.body.admin
-  }).save().then(function() {
-      res.json({result: "success"});
-  }).catch(function(err) {
-    res.status(500).send((err + "\n"));
-  });
+    var loggedIn = isLoggedIn(req, res);
+    if(loggedIn) {
+        Course.build({
+            gencode: req.body.gencode,
+            coursecode: req.body.coursecode,
+            name: req.body.name,
+            description: req.body.description,
+            admin: req.body.admin
+        }).save().then(function () {
+            res.json({result: "success", token: loggedIn.token});
+        }).catch(function (err) {
+            res.status(500).send((err + "\n"));
+        });
+    }
 });
 
 
 //removes a course with the given gencode
 router.post('/removecourse', function(req, res, next) {
-  Course.destroy({
-    where: {
-      gencode: req.body.gencode
+    var loggedIn = isLoggedIn(req, res);
+    if(loggedIn) {
+        Course.destroy({
+            where: {
+                gencode: req.body.gencode
+            }
+        }).then(function () {
+            res.json({result: "success", token: loggedIn.token})
+        }).catch(function (err) {
+            res.status(500).send("error, the course didnt get removed");
+        });
     }
-  }).then(function() {
-    res.status(200).send("removed properly");
-  }).catch(function(err) {
-    res.status(500).send("error, the course didnt get removed");
-  });
 });
 
 

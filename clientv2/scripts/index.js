@@ -30,6 +30,8 @@
       $scope.isAdmin = true;
     }
 
+
+
     setLoggedOut = function() {
       $scope.loggedIn = false;
       $scope.isAdmin = false;
