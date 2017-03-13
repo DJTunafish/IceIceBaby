@@ -23,7 +23,7 @@ VALUES
   ("abcde","DIT126", "webapp", "a course where you learn how to properly develop full-stack web applications.","adamin"),
   ("abcdf", "DIT231", "programming language technology", "A course where you use haskell <3", "adamin");
 
-INSERT INTO Question (question,answer, weight, course)
+INSERT INTO Question (question, weight, course)
 VALUES
   ("How good would you say you are at defining BNF grammar on a scale from 1 to 10?", 1.0, "abcde"),
   ("How good would you say you are at HTML/CSS on a scale from 1 to 10?", 0.33, "abcdf"),

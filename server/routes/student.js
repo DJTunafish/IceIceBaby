@@ -58,7 +58,7 @@ router.post('/join/course', function(req, res, next) {
       student: req.body.cid,
       course: req.body.gencode
     }).save().then(function() {
-      res.json({result: "success"});
+      res.json({result: "success", token: loggedIn.token});
     }).catch(function(err) {
       res.sendStatus(500);
     });

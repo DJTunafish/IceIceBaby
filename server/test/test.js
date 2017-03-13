@@ -113,6 +113,8 @@ describe("test simple request", function() {
       expect(200).
       end(function(err, res) {
         res.status.should.equal(200);
+        should.not.exist(res.body.cid);
+        should.not.exist(res.body.token);
         res.body.result.should.not.equal("success");
         done();
       });
@@ -132,6 +134,8 @@ describe("test simple request", function() {
       expect(200).
       end(function(err, res) {
         res.status.should.equal(200);
+        should.not.exist(res.body.cid);
+        should.not.exist(res.body.token);
         res.body.result.should.not.equal("success");
         done();
       });
@@ -147,10 +151,30 @@ describe("test simple request", function() {
       expect(200).
       end(function(err, res) {
         res.status.should.equal(200);
+        should.not.exist(res.body.student);
+        should.not.exist(res.body.token);
         res.body.result.should.equal("failure, user not authenticated");
         done();
     });
   });
+
+  /*
+    If the user provides a bad token, this test should not return a users profile.
+  */
+    it("Non-authenticated user can not request a profile", function(done) {
+      server.
+        get("/student").
+        set("Authorization", "thisisaverybadandcorrupttoken").
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          should.not.exist(res.body.student);
+          should.not.exist(res.body.token);
+          res.body.result.should.equal("failure, user not authenticated");
+          done();
+      });
+    });
 
 /*
   If the user provides and authenticated token, he or she should receive his or hers profile, and the test should pass.
@@ -203,4 +227,93 @@ describe("test simple request", function() {
         done();
     });
   });
+
+  /*
+    If a user provides a proper cid, course and a token, but a non-valid token,
+    he or she should not be allowed to register to a course.
+  */
+    it("User with a bad authentication token should not be able to join a course", function(done) {
+      server.
+        post("/student/join/course").
+        send({cid: "test", gencode: "abcde"}). /* valid student and course, but no token */
+        set("Authorization", "thisisaverybadandcorrupttoken").
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.result.should.equal("failure, user not authenticated");
+          done();
+      });
+    });
+
+/*
+  If a user is not authenticated, he or she should not be able to request a course.
+*/
+  it("Non-authenticated user should not be able to request a course", function(done) {
+    server.
+      get("/course?gencode=abcde").
+      expect("Content-type", /json/).
+      expect(200).
+      end(function(err, res) {
+        res.status.should.equal(200);
+        should.not.exist(res.body.course);
+        res.body.result.should.equal("failure, user not authenticated");
+        done();
+    });
+  });
+
+  /*
+    If a user is not authenticated but still sends a token, albeit corrupt, he or she should not be able to request a course.
+  */
+    it("Non-authenticated user with a BAD token should not be able to request a course", function(done) {
+      server.
+        get("/course?gencode=abcde").
+        set("Authorization", "thisisaverybadandcorrupttoken").
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          should.not.exist(res.body.course);
+          res.body.result.should.equal("failure, user not authenticated");
+          done();
+      });
+    });
+
+
+/*
+  If a user is logged in, a request for a course is allowed as long as an authorized token is passed along with the request.
+*/
+  it("Authenticated user should be able to request a course", function(done) {
+    server.
+      get("/course?gencode=abcde").
+      set("Authorization", authenticatedToken).
+      expect("Content-type", /json/).
+      expect(200).
+      end(function(err, res) {
+        res.status.should.equal(200);
+        res.body.result.should.equal("success");
+        res.body.course.should.not.equal("undefined");
+        authenticatedToken = res.body.token;
+        done();
+    });
+  });
+
+  /*
+    If a user is logged in, a request for a course is allowed as long as an authorized token is passed along with the request.
+    If the course is not present, however, this should be reported back to the client through the course-object being empty.
+  */
+    it("Authenticated user should not be able to request a course that does not exist", function(done) {
+      server.
+        get("/course?gencode=thisisabadgencode").
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.result.should.equal("success");
+          should.not.exist(res.body.course);
+          authenticatedToken = res.body.token;
+          done();
+      });
+    });
 });
