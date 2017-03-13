@@ -74,7 +74,7 @@ describe("admin test", function() {
     });
   });
 
-  it("removes Course given gencode", function(done) {
+  it("removes Course given existing gencode", function(done) {
     server
     .post("/removecourse")
     .send({gencode: 'qwe'})
@@ -86,6 +86,18 @@ describe("admin test", function() {
       done();
     });
   });
+
+    it("tries to remove non-existing course", function(done) {
+        server
+            .post("/removecourse")
+            .send({gencode: 'noCourseLikeThis'})
+            .expect("Content-type",/json/)
+            .expect(500)
+            .end(function(err, res) {
+             res.status.should.equal(500);
+             done();
+            });
+    });
 
 
 });
