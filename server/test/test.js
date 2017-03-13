@@ -434,4 +434,33 @@ describe("test simple request", function() {
           done();
       });
     });
+
+    it("Authorized user should be able to get a list of registered courses given valid cid", function(done) {
+      server.
+        get("/user/courses?cid=test").
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.result.should.equal("success");
+          res.body.courses.length.should.not.equal(0)
+          done();
+      });
+    });
+
+    it("Authorized user should NOT be able to get a list of registered courses given valid cid", function(done) {
+      server.
+        get("/user/courses?cid=teasdasdst").
+        set("Authorization", authenticatedToken).
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+          res.status.should.equal(200);
+          res.body.result.should.equal("success");
+          res.body.courses.length.should.equal(0)
+          done();
+      });
+    });
+
 });
