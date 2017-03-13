@@ -15,6 +15,7 @@
   <a href="#" class = "sideLink" ng-click="loadRegister()" ng-show="!loggedIn">Register</a>
   <a href="#" class = "sideLink" ng-click="loadProfile()" ng-show="loggedIn">Profile</a>
   <a href="#" class = "sideLink" ng-click="loadStudentCourseView()" ng-show="loggedIn && !isAdmin">Courses</a>
+  <a href="#" class = "sideLink" ng-click="loadAdminCourseView()" ng-show="loggedIn && isAdmin">Admin Courses</a>
   <a href="#" class = "sideLink" ng-click="loadAdmin()" ng-show="loggedIn && isAdmin">Course admin</a>
   <a href="#" class = "sideLink" ng-click="loadGroupManagement()" ng-show="loggedIn && !isAdmin">Group management</a>
   <!-- These will set up the side nav-bar 'buttons' properly. A method is also declared, one that will run when it is clicked. -->
@@ -36,6 +37,12 @@
       <div ng-switch-when="courses">
           <div ng-include="'partials/courses.html'"></div>
       </div>
+      <div ng-switch-when="adm-courses">
+          <div ng-include="'partials/adm-courses.html'"></div>
+      </div>
+      <div ng-switch-when="removeCourse">
+          <div ng-include="'partials/removeCourse.html'"></div>
+      </div>
       <!-- When the scope-variable displayPartial is set to registerCourse, include the partial registerCourse.html. -->
       <div ng-switch-when="registerCourse">
           <div ng-include="'partials/registerCourse.html'"></div>
@@ -48,7 +55,7 @@
       </div>
       <div ng-switch-when="quiz">
           <div ng-include="'partials/quiz.html'"></div>
-
+      </div>
       <div ng-switch-when="groupManagement">
           <div ng-include="'partials/groupManagement.html'"></div>
       </div>
