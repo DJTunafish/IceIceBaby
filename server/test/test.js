@@ -497,6 +497,18 @@ describe("test simple request", function() {
       });
     });
 
+    it("tries to remove non-existing course", function(done) {
+        server
+            .post("/admin/removecourse")
+            .set("Authorization", authenticatedToken)
+            .send({gencode: 'noCourseLikeThis'})
+            .expect("Content-type",/json/)
+            .expect(200)
+            .end(function(err, res) {
+                res.status.should.equal(200);
+                done();
+            });
+    });
 
     it("removes Course given existing gencode", function(done) {
       server

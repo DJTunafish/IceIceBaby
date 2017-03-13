@@ -20,9 +20,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/courses', function(req, res, next) {
     var loggedIn = isLoggedIn(req, res);
-    console.log("getting courses")
     if(loggedIn) {
-      console.log("getting courses")
         Course.findAll({
             where: {
                 admin: req.query.cid
@@ -33,6 +31,9 @@ router.get('/courses', function(req, res, next) {
         }).catch(function (err) {
             res.sendStatus(500);
         });
+    }
+    else{
+        res.sendStatus(500);
     }
 });
 
