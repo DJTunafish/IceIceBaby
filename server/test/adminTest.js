@@ -100,4 +100,16 @@ describe("admin test", function() {
     });
 
 
+    it("Non-authenticated admin should not be able to request courses", function(done) {
+        server.
+        get("/courses?cid=notAdmin").
+        expect("Content-type", /json/).
+        expect(200).
+        end(function(err, res) {
+            res.status.should.equal(500);
+            should.not.exist(res.body.courses);
+            done();
+        });
+    });
+
 });

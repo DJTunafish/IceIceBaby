@@ -31,7 +31,7 @@ router.get('/courses', function(req, res, next) {
           console.log(courses)
            res.json({result: "success", courses: courses, token: loggedIn.token});
         }).catch(function (err) {
-            console.log("error when getting courses")
+            res.sendStatus(500);
         });
     }
 });
