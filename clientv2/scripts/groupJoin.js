@@ -60,7 +60,7 @@ function prevSuitor($scope){
 
 function sendInvite($scope, $http, invitee){
   console.log("Sending group invite from " + sessionStorage.getItem("cid") + "to " +
-               ivitee);
+               invitee);
   $.getScript('scripts/constants.js', function() {
     $http({
       method: 'POST',
